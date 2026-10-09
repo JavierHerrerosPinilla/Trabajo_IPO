@@ -1,0 +1,220 @@
+﻿Diagnose log at 2026-10-09T14:39:34Z
+
+AppPath: C:\Program Files\Git\mingw64\bin\git-credential-manager.exe
+InstallDir: C:\Program Files\Git\mingw64\bin\
+Version: 2.6.1+786ab03440ddc82e807a97c0e540f5247e44cec6
+
+------------
+Diagnostic: Environment
+Skipped: False
+Success: True
+Exception: None
+Log:
+OSType: Windows
+OSVersion: 10.0 (build 26200)
+Reading environment variables... OK
+ Variables:
+HOMEPATH=\Users\javie
+USERNAME=javie
+COMPUTERNAME=LIBERTAD
+PROGRAMDATA=C:\ProgramData
+GIT_TRACE2_PARENT_SID=283b27cc-ecdb-4e1b-b9a0-6329e9c7c1a8
+PROCESSOR_LEVEL=6
+GIT_CONFIG_KEY_0=safe.bareRepository
+SESSIONNAME=Console
+GIT_CONFIG_VALUE_1=never
+TMP=C:\Users\javie\AppData\Local\Temp
+LC_CTYPE=C.UTF-8
+PROCESSOR_ARCHITECTURE=x86
+COMMONPROGRAMFILES(X86)=C:\Program Files (x86)\Common Files
+USE_BUILTIN_RIPGREP=false
+PROCESSOR_REVISION=8d01
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+PSMODULEPATH=C:\Users\javie\OneDrive\Documentos\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+GIT_EXEC_PATH=C:/Program Files/Git/mingw64/libexec/git-core
+COMMONPROGRAMW6432=C:\Program Files\Common Files
+TEMP=C:\Users\javie\AppData\Local\Temp
+LOCALAPPDATA=C:\Users\javie\AppData\Local
+MSYSTEM=MINGW64
+TERM=xterm-256color
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 141 Stepping 1, GenuineIntel
+SYSTEMDRIVE=C:
+PROGRAMFILES=C:\Program Files (x86)
+SKILL_CHAR_BUDGET=30000
+USERPROFILE=C:\Users\javie
+JAVA_HOME=C:\Program Files\Zulu\zulu-21\
+USERDOMAIN=LIBERTAD
+AUTO_APPROVAL=true
+HOMEDRIVE=C:
+ANTHROPIC_ADVISOR=false
+GIT_CONFIG_VALUE_0=explicit
+GIT_CONFIG_KEY_2=core.fsmonitor
+NUMBER_OF_PROCESSORS=16
+SSH_ASKPASS=
+GCM_INTERACTIVE=Never
+EFC_5628_1592913036=1
+GIT_CONFIG_COUNT=3
+GCM_GUI_PROMPT=False
+AI_AGENT=github_copilot_vscode_agent
+PUBLIC=C:\Users\Public
+SYSTEMROOT=C:\WINDOWS
+USERDOMAIN_ROAMINGPROFILE=LIBERTAD
+CLAUDE_CODE_DISABLE_PRECOMPACT_SKIP=1
+IGCCSVC_DB=AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAxaUVo57BTUuWhGf1DY4yhwQAAAACAAAAAAAQZgAAAAEAACAAAAArkH0u7jm1m8MdRRByKXmvsodAxS3RnAuVmjYLQqxBFwAAAAAOgAAAAAIAACAAAAD0tKc8y0U/LFIbyfJmr/FvuRFzGwdjsg09udKbdNznI2AAAAD8mEnTXLGOEg4H0fSrOwXYR3W2fM91zKuK1UYwKEC9Q2Cc1LEVzoQeJ4ctVpfgU3aKOhzANZHOI7eVSEQAMui33WAPf9b9eQG0IeCN0EOc6/OOYazZZWE8GsbziUu7gLhAAAAA0pzpqvBjUSBUHmGDQzAtgD923B5MJoqYcKEaZGc0oryrUa3PbK1QhIisabBbmanXFnqOV6qTfbUMmhKNHMjBLg==
+WINDIR=C:\WINDOWS
+POWERSHELL_UPDATECHECK=Off
+PLINK_PROTOCOL=ssh
+PROGRAMW6432=C:\Program Files
+PROGRAMFILES(X86)=C:\Program Files (x86)
+PATH=C:/Program Files/Git/mingw64/libexec/git-core;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\javie\bin;C:\Program Files\Zulu\zulu-21\bin\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Users\javie\OneDrive\Escritorio\Uni\Ing informatica\Segundo año\1er Cuatri\Lógica\Prácticas\Prolog\swipl\bin;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\GnuWin32\bin;C:\Users\javie\AppData\Local\Programs\Python\Python313\Scripts\;C:\Users\javie\AppData\Local\Programs\Python\Python313\;C:\Users\javie\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\javie\AppData\Local\Programs\Python\Python311\;C:\Users\javie\AppData\Local\Microsoft\WindowsApps;C:\Users\javie\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\javie\.dotnet\tools;C:\Users\javie\AppData\Local\Python\bin;C:\Users\javie\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Alire;C:\Users\javie\AppData\Local\Programs\Apache\apache-maven-3.9.11\bin;C:\Users\javie\AppData\Local\Programs\Apache\apache-maven-3.9.16\bin;c:\Users\javie\AppData\Local\Programs\Microsoft VS Code\07f806f999\resources\app\node_modules.asar.unpacked\@vscode\ripgrep-universal\bin\win32-x64
+COPILOT_ENABLE_BUILTIN_GITHUB_MCP=true
+COPILOT_MCP_APPS=true
+TMPDIR=C:\Users\javie\AppData\Local\Temp
+GIT_OPTIONAL_LOCKS=0
+PT8HOME=C:\Program Files\Cisco Packet Tracer 9.0.0
+HOME=C:\Users\javie
+REGIONCODE=EMEA
+GIT_CONFIG_KEY_1=credential.interactive
+COMSPEC=C:\WINDOWS\system32\cmd.exe
+ZES_ENABLE_SYSMAN=1
+LOGONSERVER=\\LIBERTAD
+MXC_BIN_DIR=c:\Users\javie\AppData\Local\Programs\Microsoft VS Code\07f806f999\resources\app\node_modules.asar.unpacked\@microsoft\mxc-sdk\bin
+COPILOT_RUNTIME_PROCESS_FILE_LOGGING=1
+ONEDRIVE=C:\Users\javie\OneDrive - Universidad de Castilla-La Mancha
+COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files
+COPILOT_HOME=c:\Users\javie\.copilot
+ONLINESERVICES=Online Services
+COPILOT_CLI=1
+APPDATA=C:\Users\javie\AppData\Roaming
+COLORTERM=truecolor
+ONEDRIVECOMMERCIAL=C:\Users\javie\OneDrive - Universidad de Castilla-La Mancha
+RUBBER_DUCK_AGENT=true
+COPILOT_AGENT_SESSION_ID=8da4eae6-e674-44fb-8949-528faa37ed37
+VBOX_MSI_INSTALL_PATH=C:\Program Files\Oracle\VirtualBox\
+CHROME_CRASHPAD_PIPE_NAME=\\.\pipe\crashpad_35700_PNLTFGYVATUCXCYO
+PROCESSOR_ARCHITEW6432=AMD64
+COPILOT_CLI_RUN_AS_NODE=1
+GIT_TERMINAL_PROMPT=0
+GIT_CONFIG_VALUE_2=false
+OS=Windows_NT
+PLATFORMCODE=M7
+EFC_5628_4126798990=1
+DRIVERDATA=C:\Windows\System32\Drivers\DriverData
+GIT_ASKPASS=
+ALLUSERSPROFILE=C:\ProgramData
+
+
+------------
+Diagnostic: File system
+Skipped: False
+Success: True
+Exception: None
+Log:
+Temporary directory is 'C:\Users\javie\AppData\Local\Temp\'...
+Checking basic file I/O...
+Writing to temporary file 'C:\Users\javie\AppData\Local\Temp\5f704f5dafeeecfd22f6bf22'... OK
+Reading from temporary file 'C:\Users\javie\AppData\Local\Temp\5f704f5dafeeecfd22f6bf22'... OK
+Deleting temporary file 'C:\Users\javie\AppData\Local\Temp\5f704f5dafeeecfd22f6bf22'... OK
+Testing IFileSystem instance...
+UserHomePath: C:\Users\javie
+UserDataDirectoryPath: C:\Users\javie\.gcm
+GetCurrentDirectory(): C:\Users\javie\OneDrive\Escritorio\Uni\Ing informatica\Tercero\1er Cuatri\Interacción Persona Ordenador\Lab\code\Trabajo_IPO
+
+------------
+Diagnostic: Networking
+Skipped: False
+Success: False
+Exception:
+System.Net.Http.HttpRequestException: Error al enviar la solicitud. ---> System.Net.WebException: Se ha terminado la conexión: Error inesperado de envío. ---> System.IO.IOException: No se puede escribir datos de en la conexión de transporte: Se ha forzado la interrupción de una conexión existente por el host remoto. ---> System.Net.Sockets.SocketException: Se ha forzado la interrupción de una conexión existente por el host remoto
+   en System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   en System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Fin del seguimiento de la pila de la excepción interna ---
+   en System.Net.TlsStream.EndWrite(IAsyncResult asyncResult)
+   en System.Net.PooledStream.EndWrite(IAsyncResult asyncResult)
+   en System.Net.ConnectStream.WriteHeadersCallback(IAsyncResult ar)
+   --- Fin del seguimiento de la pila de la excepción interna ---
+   en System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+   en System.Net.Http.HttpClientHandler.GetResponseCallback(IAsyncResult ar)
+   --- Fin del seguimiento de la pila de la excepción interna ---
+   en System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   en System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   en System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   en GitCredentialManager.Diagnostics.NetworkingDiagnostic.<RunInternalAsync>d__4.MoveNext()
+--- Fin del seguimiento de la pila de la ubicación anterior donde se produjo la excepción ---
+   en System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   en System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   en System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   en GitCredentialManager.Diagnostics.Diagnostic.<RunAsync>d__6.MoveNext()
+Log:
+Checking networking and HTTP stack...
+Creating HTTP client... OK
+IsNetworkAvailable: True
+Sending HEAD request to http://example.com...Sending HEAD request to https://example.com... warning: HEAD request failed
+Sending HEAD request to http://httpforever.com...
+------------
+Diagnostic: Git
+Skipped: False
+Success: True
+Exception: None
+Log:
+Getting Git version... OK
+Git version is '2.52.0.windows.1'
+Locating current repository...Git repository at 'C:/Users/javie/OneDrive/Escritorio/Uni/Ing informatica/Tercero/1er Cuatri/Interacción Persona Ordenador/Lab/code/Trabajo_IPO/.git'
+ OK
+Listing all Git configuration... OK
+Git configuration:
+file:C:/Program Files/Git/etc/gitconfig	diff.astextplain.textconv=astextplain
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.clean=git-lfs clean -- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.smudge=git-lfs smudge -- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.process=git-lfs filter-process
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.required=true
+file:C:/Program Files/Git/etc/gitconfig	http.sslbackend=schannel
+file:C:/Program Files/Git/etc/gitconfig	core.autocrlf=true
+file:C:/Program Files/Git/etc/gitconfig	core.fscache=true
+file:C:/Program Files/Git/etc/gitconfig	core.symlinks=false
+file:C:/Program Files/Git/etc/gitconfig	pull.rebase=false
+file:C:/Program Files/Git/etc/gitconfig	credential.helper=manager
+file:C:/Program Files/Git/etc/gitconfig	credential.https://dev.azure.com.usehttppath=true
+file:C:/Program Files/Git/etc/gitconfig	init.defaultbranch=master
+file:C:/Users/javie/.gitconfig	user.email=javierhpcalatrava@email.com
+file:C:/Users/javie/.gitconfig	user.name=Javier-Herreros-Pinilla
+file:C:/Users/javie/.gitconfig	core.autocrlf=true
+file:.git/config	core.repositoryformatversion=0
+file:.git/config	core.filemode=false
+file:.git/config	core.bare=false
+file:.git/config	core.logallrefupdates=true
+file:.git/config	core.symlinks=false
+file:.git/config	core.ignorecase=true
+file:.git/config	remote.origin.url=git@github.com:JavierHerrerosPinilla/Trabajo_IPO.git
+file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+command line:	safe.barerepository=explicit
+command line:	credential.interactive=never
+command line:	core.fsmonitor=false
+
+
+------------
+Diagnostic: Credential storage
+Skipped: False
+Success: True
+Exception: None
+Log:
+ICredentialStore instance is of type: CredentialStore
+Writing test credential... OK
+Reading test credential... OK
+Deleting test credential... OK
+
+------------
+Diagnostic: Microsoft authentication (AAD/MSA)
+Skipped: False
+Success: True
+Exception: None
+Log:
+Broker is not enabled.
+Flow type is: Auto
+Gathering MSAL token cache data... OK
+CacheDirectory: C:\Users\javie\AppData\Local\.IdentityService
+CacheFileName: msal.cache
+CacheFilePath: C:\Users\javie\AppData\Local\.IdentityService\msal.cache
+Creating cache helper... OK
+Verifying MSAL token cache persistence... OK
+
