@@ -1,0 +1,57 @@
+TRABAJO IPO - PROTOTIPO DE GESTIÓN DE COMPLEJO TURÍSTICO
+=========================================================
+
+Autores
+-------
+Integrantes del grupo:
+- [NOMBRE Y APELLIDOS DE LA PERSONA 1]
+- [NOMBRE Y APELLIDOS DE LA PERSONA 2]
+
+Aplicación
+-----------
+Prototipo de escritorio desarrollado con WPF y C# para la gestión de
+alojamientos, reservas, empleados temporales y actividades de verano.
+
+Requisitos
+----------
+- Windows con .NET Framework 4.7.2 o superior compatible con el proyecto.
+- Visual Studio con la carga de trabajo "Desarrollo de escritorio .NET".
+- No se requiere base de datos: los datos de demostración se mantienen en memoria
+  durante la sesión de la aplicación.
+
+Cómo ejecutar
+-------------
+1. Abrir Trabajo_IPO.sln en Visual Studio.
+2. Seleccionar la configuración Debug o Release.
+3. Compilar la solución.
+4. Ejecutar el proyecto Trabajo_IPO.
+5. Utilizar una de las credenciales de prueba indicadas a continuación.
+
+Datos de autenticación para probar el funcionamiento
+-----------------------------------------------------
+Usuario: admin
+Password: camping2026
+
+Usuario: javier
+Password: ipo2026
+
+Usuario: recepcion
+Password: bienvenido
+
+Funcionalidades principales
+---------------------------
+- Inicio de sesión con validación de credenciales.
+- Consulta del perfil del gestor y del último acceso.
+- Alta, modificación y baja de alojamientos.
+- Alta, modificación y cancelación de reservas.
+- Consulta de empleados temporales y actividades.
+- Ayuda contextual mediante tooltips.
+- Ayuda general e información de autoría.
+- Confirmación antes de eliminar datos.
+- Cambio opcional entre tamaño de fuente normal y grande.
+
+Observaciones
+-------------
+Este proyecto es un prototipo académico. Al cerrar la aplicación se pierden
+los cambios realizados durante la sesión, ya que el enunciado no exige
+persistencia real.
