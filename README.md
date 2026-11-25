@@ -1,140 +1,81 @@
-# Trabajo IPO — Gestión de complejo turístico
+# Trabajo IPO — Gestión de complejo turístico rural
 
-Prototipo de aplicación de escritorio desarrollado con **C#**, **WPF** y
-**.NET Framework 4.7.2** para gestionar un complejo turístico o camping.
+Prototipo de aplicación interactiva de escritorio desarrollado con **C#**, **WPF** y **.NET Framework 4.7.2** para la asignatura **Interacción Persona-Ordenador I** (Curso 2026/2027, ESI — Universidad de Castilla-La Mancha).
 
-La aplicación permite trabajar con alojamientos, reservas, empleados
-temporales y actividades de verano. Los datos son de demostración y se
-mantienen en memoria durante la sesión, ya que el enunciado no exige
-persistencia real.
+**Autores:** Javier Herreros Pinilla (50 %) y Miguel Gómez-Carreño Rodríguez-Escalona (50 %).
 
-## Requisitos
+---
 
-- Windows.
-- Visual Studio 2019 o posterior.
-- Carga de trabajo de Visual Studio **Desarrollo de escritorio .NET**.
-- .NET Framework 4.7.2 o una versión compatible instalada.
+## Requisitos del entorno
 
-## Cómo ejecutar el proyecto
+- Windows 10 / 11 con **.NET Framework 4.7.2** o superior.
+- Visual Studio 2019 o 2022 con la carga de trabajo **Desarrollo de escritorio .NET**.
+- Sin base de datos externa: todos los datos de demostración e imágenes se mantienen en memoria / recursos embebidos.
 
-1. Clonar el repositorio:
+## Cómo compilar y ejecutar
 
-   ```powershell
-   git clone https://github.com/JavierHerrerosPinilla/Trabajo_IPO.git
-   ```
+1. Abrir `Trabajo_IPO.sln` en Visual Studio (o compilar por CLI con `MSBuild.exe Trabajo_IPO.sln /t:Rebuild /p:Configuration=Debug`).
+2. Seleccionar la configuración `Debug` o `Release`.
+3. Establecer `Trabajo_IPO` como proyecto de inicio y pulsar `F5` o `Ctrl+F5`.
+4. Iniciar sesión con una de las credenciales de prueba:
 
-2. Abrir la solución `Trabajo_IPO.sln` en Visual Studio.
-3. Seleccionar la configuración `Debug` o `Release`.
-4. Establecer `Trabajo_IPO` como proyecto de inicio si Visual Studio no lo
-   selecciona automáticamente.
-5. Compilar la solución mediante **Compilar > Compilar solución**.
-6. Ejecutar con **Depurar > Iniciar sin depurar** o pulsando `Ctrl+F5`.
-7. Iniciar sesión con una de las credenciales de prueba.
+| Usuario | Contraseña | Perfil |
+|---|---|---|
+| `admin` | `camping2026` | Laura García Martín (Gestora del complejo) |
+| `javier` | `ipo2026` | Javier Herreros Pinilla (Gestor del complejo) |
+| `recepcion` | `bienvenido` | María Sánchez Pérez (Recepción y gestión) |
 
-La aplicación comienza en la ventana de autenticación. Después de iniciar
-sesión correctamente se muestra la ventana principal de gestión.
+---
 
-## Credenciales de prueba
+## Funcionalidades implementadas
 
-| Usuario | Contraseña |
-|---|---|
-| `admin` | `camping2026` |
-| `javier` | `ipo2026` |
-| `recepcion` | `bienvenido` |
+- **Autenticación y sesión (`LoginWindow`)**:
+  - Validación de credenciales con mensaje de error **inline** junto al formulario y resaltado visual de campos.
+  - Opción **Mostrar contraseña**, botón **Limpiar**, acceso directo a **? Ayuda (`F1`)** y botón **Salir** con confirmación.
+  - Visualización en cabecera de la foto de perfil del gestor, su rol y la fecha/hora del último acceso.
+  - Opción de **Cerrar sesión** (vuelve a `LoginWindow`) y **Salir** en cualquier momento previa confirmación conservadora (`No` predeterminado).
+- **Gestión de Alojamientos (Parcelas y Bungalows)**:
+  - Alta, edición, consulta **Master/Detail** y baja con aviso explícito si existen reservas activas o futuras.
+  - **Parcelas**: categoría (Pequeña, Mediana, Deluxe, Autocaravana), tamaño (`m²`), ubicación, capacidad, servicios (agua, luz, desagüe, setos, sombra) y **tarifas por temporada** (baja, media, alta).
+  - **Bungalows**: tamaño (`m²`), capacidad máxima, tarifa por noche, **estancia mínima opcional**, equipamiento (menaje, microondas, ropa de cama y toallas, Wi-Fi, terraza, aire acondicionado), descripción y **galería de fotos** (añadir/quitar imágenes).
+  - Filtros combinables por tipo, estado, capacidad mínima y búsqueda textual, más cambio manual de estado.
+- **Cuadrante de Disponibilidad**:
+  - Vista de calendario por quincenas (`◀ Anterior` / `Siguiente ▶`) con una fila por alojamiento y filtros por tipo y estado.
+  - Codificación accesible redundante (**color + icono + texto**) para los 5 estados (`Libre`, `Ocupada`, `Reservada`, `En reparación`, `Pendiente de limpieza`).
+  - Creación directa de reserva haciendo clic sobre cualquier celda `✓ Libre`.
+- **Gestión de Reservas**:
+  - Alta, edición, cambio rápido de estado (`En curso`, `Finalizada`) y cancelación previa confirmación.
+  - Validación de teléfono(s) obligatorio(s), correo electrónico opcional, fecha de salida posterior a entrada, horas estimadas, capacidad máxima, estancia mínima en bungalows, bloqueo de alojamientos `En reparación` y detección de solapamientos.
+  - Cálculo dinámico en vivo de número de noches, temporada e importe estimado, más solicitudes especiales (`Cuna`, `Menaje concreto`, `Movilidad reducida` y observaciones).
+- **Gestión de Empleados Temporales (Guías y Monitores)**:
+  - Alta, edición y baja con aviso explícito si el empleado tiene actividades de verano asignadas.
+  - Foto reciente (con selector desde archivo), nombre, apellidos, función, teléfonos, correos, idiomas, formación y restricciones por días de la semana (`Lun..Dom`).
+  - Vista **Master/Detail horizontal** con ficha lateral y listado automático de actividades asignadas.
+- **Gestión de Actividades de Verano**:
+  - Alta, edición, consulta **Master/Detail**, filtros (área, destinatarios, día y búsqueda) y eliminación confirmada.
+  - Horario, días, cupo mínimo/máximo validado, precio por hora y/o mes, materiales y asignación múltiple de monitores con **aviso automático en vivo** ante solapes horarios o días no disponibles.
+- **Accesibilidad, ayuda y atajos**:
+  - Ayuda contextual mediante `ToolTip` en todos los controles y ventana `AyudaWindow` (`F1`) con índice de 8 apartados y datos de autoría.
+  - Adaptación de tamaño de fuente (`A-`, `A`, `A+`) y modo de **Alto Contraste** (`Contraste`).
+  - Barra de estado con retroalimentación horaria tras cada operación.
+  - Atajos de teclado: `F1` (Ayuda), `Ctrl+1..5` (Pestañas), `Ctrl+N` (Nuevo), `Ctrl+E` (Editar), `Supr` (Eliminar).
 
-## Funcionalidades principales
-
-- Inicio de sesión con validación de credenciales.
-- Visualización del perfil del gestor y de su último acceso.
-- Alta, modificación, consulta y baja de alojamientos.
-- Gestión de parcelas y bungalows.
-- Alta, modificación y cancelación de reservas.
-- Validación de fechas, capacidad y solapamiento de reservas.
-- Consulta de empleados temporales.
-- Consulta de actividades de verano.
-- Ayuda contextual mediante `ToolTip`.
-- Ayuda general e información de autoría.
-- Confirmación antes de eliminar datos.
-- Cambio entre tamaño de fuente normal y grande.
+---
 
 ## Estructura del proyecto
 
-### Ventanas XAML y code-behind
-
-- **`App.xaml` / `App.xaml.cs`**  
-  Configuran la aplicación WPF y establecen `LoginWindow` como ventana
-  inicial.
-
-- **`LoginWindow.xaml` / `LoginWindow.xaml.cs`**  
-  Implementan la autenticación. Comprueban el usuario y la contraseña,
-  muestran errores y abren la ventana principal cuando el acceso es válido.
-
-- **`MainWindow.xaml` / `MainWindow.xaml.cs`**  
-  Contienen la interfaz principal. Organizan la aplicación mediante pestañas
-  para alojamientos, reservas, empleados y actividades. También gestionan la
-  ayuda, el tamaño de fuente y las confirmaciones de eliminación.
-
-- **`AlojamientoFormWindow.xaml` / `AlojamientoFormWindow.xaml.cs`**  
-  Formulario reutilizable para crear y modificar parcelas y bungalows.
-  Incluye validación de campos, controles específicos por tipo y prevención
-  de códigos duplicados.
-
-- **`ReservaFormWindow.xaml` / `ReservaFormWindow.xaml.cs`**  
-  Formulario reutilizable para crear y modificar reservas. Valida fechas,
-  ocupantes, capacidad, disponibilidad y solapamientos.
-
-- **`AyudaWindow.xaml` / `AyudaWindow.xaml.cs`**  
-  Muestran la guía rápida de uso, la ayuda contextual, los criterios de
-  seguridad y la información de autoría.
-
-### Modelos y datos
-
-- **`Modelos.cs`**  
-  Define las clases de dominio:
-  `Gestor`, `Alojamiento`, `Reserva`, `EmpleadoTemporal` y `Actividad`.
-
-- **`DatosPrueba.cs`**  
-  Contiene las colecciones `ObservableCollection<T>` con los datos de
-  demostración de gestores, alojamientos, reservas, empleados y actividades.
-
-### Configuración y documentación
-
-- **`Trabajo_IPO.sln`**  
-  Solución de Visual Studio.
-
-- **`Trabajo_IPO.csproj`**  
-  Configuración del proyecto WPF, referencias, ventanas y archivos C#.
-
-- **`App.config`**  
-  Configuración de la aplicación .NET Framework.
-
-- **`leeme.txt`**  
-  Instrucciones básicas de ejecución, integrantes y credenciales de prueba.
-
-- **`Memoria_Final_Plantilla.md`**  
-  Plantilla de la memoria final con las secciones del enunciado.
-
-- **`Properties/`**  
-  Recursos, configuración y metadatos del proyecto.
-
-## Datos y persistencia
-
-No se utiliza una base de datos. Los registros se inicializan en
-`DatosPrueba.cs` y se almacenan en colecciones en memoria. Por este motivo,
-los cambios realizados durante la ejecución se pierden al cerrar la
-aplicación.
-
-## Ayuda y usabilidad
-
-La interfaz utiliza una ventana principal con navegación mediante pestañas para
-reducir la apertura de ventanas. Las acciones importantes disponen de
-`ToolTip`, las operaciones destructivas solicitan confirmación y los
-formularios validan los datos antes de guardarlos.
-
-La aplicación también permite alternar entre un tamaño de fuente normal y uno
-grande mediante el botón `A+` del encabezado.
-
-## Licencia y finalidad
-
-Proyecto académico realizado para la asignatura Interacción
-Persona-Ordenador I, curso 2026/2027.
+- `App.xaml` / `App.xaml.cs`: recursos compartidos, paleta controlada, estilos y ventana de inicio.
+- `LoginWindow.xaml` / `.cs`: autenticación de gestores.
+- `MainWindow.xaml` / `.cs`: ventana principal con navegación por 5 pestañas, filtros, cuadrante de disponibilidad y fichas Master/Detail.
+- `AlojamientoFormWindow.xaml` / `.cs`: formulario dinámico para parcelas y bungalows.
+- `ReservaFormWindow.xaml` / `.cs`: formulario de reservas con validaciones y cálculo de importe.
+- `EmpleadoFormWindow.xaml` / `.cs`: formulario de guías y monitores temporales.
+- `ActividadFormWindow.xaml` / `.cs`: formulario de actividades de verano con detección de conflictos.
+- `AyudaWindow.xaml` / `.cs`: ayuda por módulos, atajos de teclado e información de autoría.
+- `Modelos.cs`, `DatosPrueba.cs`, `Converters.cs`: clases de dominio (`INotifyPropertyChanged`), datos de prueba y convertidores accesibles.
+- `Assets/`: logotipo, avatares y fotografías embebidas como recursos WPF.
+- `Bocetos/`: proyecto Balsamiq mejorado (`New Project copy.bmpr`) y vistas exportadas en PNG.
+- `Memoria_Final.md` / `Memoria_Final.pdf`: memoria completa de la práctica.
+- `Manual_Usuario_Video_Guion.txt`: guion detallado para la grabación del vídeo demostración.
+- `Lista_Pendientes.md`: trazabilidad completa de requisitos frente al enunciado y el Hito 1.
+- `leeme.txt`: guía de ejecución y credenciales exigida por el enunciado.

@@ -1,85 +1,288 @@
 <Window x:Class="Trabajo_IPO.AlojamientoFormWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Alojamiento" Width="520" Height="560"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
-        Background="#F5F7FA">
-    <Grid Margin="28">
+        Title="Alojamiento" Width="880" Height="700"
+        MinWidth="780" MinHeight="620"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Background="{DynamicResource AppBgBrush}">
+    <Grid Margin="22">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="TituloTextBlock" Text="Nuevo alojamiento" FontSize="24"
-                   FontWeight="Bold" Foreground="#17324D" Margin="0,0,0,22"/>
 
-        <Grid Grid.Row="1" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="155"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Código *" VerticalAlignment="Center"/>
-            <TextBox x:Name="CodigoTextBox" Grid.Column="1" Height="30"
-                     ToolTip="Código único, por ejemplo P-03 o B-08"/>
-        </Grid>
-        <Grid Grid.Row="2" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="155"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Tipo *" VerticalAlignment="Center"/>
-            <ComboBox x:Name="TipoComboBox" Grid.Column="1" Height="30"
-                      SelectionChanged="TipoComboBox_SelectionChanged"
-                      ToolTip="Seleccione si el alojamiento es una parcela o un bungalow">
-                <ComboBoxItem Content="Parcela"/>
-                <ComboBoxItem Content="Bungalow"/>
-            </ComboBox>
-        </Grid>
-        <Grid Grid.Row="3" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="155"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Capacidad *" VerticalAlignment="Center"/>
-            <TextBox x:Name="CapacidadTextBox" Grid.Column="1" Height="30"
-                     ToolTip="Número máximo de personas"/>
-        </Grid>
-        <Grid Grid.Row="4" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="155"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Precio por noche *" VerticalAlignment="Center"/>
-            <TextBox x:Name="PrecioTextBox" Grid.Column="1" Height="30"
-                     ToolTip="Precio en euros por noche"/>
-        </Grid>
-        <Grid Grid.Row="5" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="155"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Ubicación" VerticalAlignment="Center"/>
-            <TextBox x:Name="UbicacionTextBox" Grid.Column="1" Height="30"
-                     ToolTip="Zona del camping en la que se encuentra"/>
-        </Grid>
-        <StackPanel Grid.Row="6">
-            <CheckBox x:Name="SetosCheckBox" Content="Delimitada por setos"
-                      Margin="155,0,0,10" ToolTip="Indica si la parcela está delimitada por setos"/>
-            <CheckBox x:Name="WifiCheckBox" Content="Dispone de Wi-Fi"
-                      Margin="155,0,0,10" ToolTip="Indica si el bungalow dispone de conexión Wi-Fi"/>
-        </StackPanel>
-        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Cancelar" Width="100" Height="34" Margin="0,0,10,0"
-                    IsCancel="True" Click="Cancelar_Click"
-                    ToolTip="Cerrar sin guardar cambios"/>
-            <Button Content="Guardar" Width="110" Height="34" Background="#2E7D32"
-                    Foreground="White" FontWeight="Bold" IsDefault="True"
-                    Click="Guardar_Click" ToolTip="Validar y guardar el alojamiento"/>
-        </StackPanel>
+        <DockPanel Margin="0,0,0,14">
+            <TextBlock x:Name="TituloTextBlock" Text="Nuevo alojamiento" FontSize="22"
+                       FontWeight="Bold" Foreground="{DynamicResource HeaderBgBrush}" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="28,0,0,0">
+                <TextBlock Text="Tipo de alojamiento:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                <RadioButton x:Name="ParcelaRadioButton" Content="Parcela" IsChecked="True"
+                             VerticalAlignment="Center" Margin="0,0,16,0"
+                             Checked="TipoRadio_Changed" ToolTip="Parcela para tienda o caravana con tarifas por temporada"/>
+                <RadioButton x:Name="BungalowRadioButton" Content="Bungalow"
+                             VerticalAlignment="Center"
+                             Checked="TipoRadio_Changed" ToolTip="Cabaña de madera o bungalow con equipamiento y galería"/>
+            </StackPanel>
+            <Button Content="? Ayuda" Style="{StaticResource SecondaryButtonStyle}"
+                    HorizontalAlignment="Right" Click="Ayuda_Click"
+                    ToolTip="Abrir ayuda sobre alojamientos (F1)"/>
+        </DockPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Bloque izquierdo: Datos generales -->
+                <GroupBox Header="Datos generales" Grid.Column="0">
+                    <StackPanel>
+                        <Grid Margin="0,4,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                    <Run Text="Código"/>
+                                    <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                </TextBlock>
+                                <TextBox x:Name="CodigoTextBox" Height="34"
+                                         ToolTip="Código único identificativo, por ejemplo P-03 o B-08"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                    <Run Text="Categoría"/>
+                                    <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                </TextBlock>
+                                <ComboBox x:Name="CategoriaComboBox" Height="34" IsEditable="True"
+                                          ToolTip="Categoría del alojamiento"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                    <Run Text="Tamaño (m²)"/>
+                                    <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                </TextBlock>
+                                <TextBox x:Name="TamanoTextBox" Height="34"
+                                         ToolTip="Superficie aproximada en metros cuadrados (mayor que 0)"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                    <Run Text="Capacidad máxima"/>
+                                    <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                </TextBlock>
+                                <TextBox x:Name="CapacidadTextBox" Height="34"
+                                         ToolTip="Número máximo de personas permitidas"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.2*"/>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold" Margin="0,0,0,4" Text="Ubicación en el camping"/>
+                                <ComboBox x:Name="UbicacionComboBox" Height="34" IsEditable="True"
+                                          ToolTip="Zona del camping (cercanía a aseos, piscina, entrada, etc.)">
+                                    <ComboBoxItem Content="Junto a la piscina"/>
+                                    <ComboBoxItem Content="Junto a aseos y fregaderos"/>
+                                    <ComboBoxItem Content="Junto al bar-restaurante"/>
+                                    <ComboBoxItem Content="Cerca de la entrada"/>
+                                    <ComboBoxItem Content="Zona arbolada norte"/>
+                                    <ComboBoxItem Content="Zona de bungalows"/>
+                                    <ComboBoxItem Content="Zona tranquila"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                    <Run Text="Estado actual"/>
+                                    <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                </TextBlock>
+                                <ComboBox x:Name="EstadoComboBox" Height="34"
+                                          ToolTip="Disponibilidad actual del alojamiento">
+                                    <ComboBoxItem Content="Libre"/>
+                                    <ComboBoxItem Content="Ocupada"/>
+                                    <ComboBoxItem Content="Reservada"/>
+                                    <ComboBoxItem Content="En reparación"/>
+                                    <ComboBoxItem Content="Pendiente de limpieza"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock FontWeight="SemiBold" Margin="0,0,0,4" Text="Descripción breve"/>
+                        <TextBox x:Name="DescripcionTextBox" Height="82" TextWrapping="Wrap"
+                                 AcceptsReturn="True" VerticalContentAlignment="Top"
+                                 VerticalScrollBarVisibility="Auto"
+                                 ToolTip="Resumen de características y entorno del alojamiento"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Bloque derecho: específico de Parcela o Bungalow -->
+                <StackPanel Grid.Column="2">
+                    <!-- Panel específico de Parcela -->
+                    <StackPanel x:Name="ParcelaPanel">
+                        <GroupBox Header="Servicios y características de la parcela" Margin="0,0,0,12">
+                            <StackPanel Margin="4">
+                                <CheckBox x:Name="AguaCheckBox" Content="Toma de agua potable" Margin="0,4"
+                                          ToolTip="Dispone de punto de agua en la parcela"/>
+                                <CheckBox x:Name="LuzCheckBox" Content="Toma de luz eléctrica" Margin="0,4"
+                                          ToolTip="Dispone de conexión eléctrica"/>
+                                <CheckBox x:Name="DesagueCheckBox" Content="Conexión de desagüe" Margin="0,4"
+                                          ToolTip="Dispone de desagüe para caravanas/autocaravanas"/>
+                                <CheckBox x:Name="SetosCheckBox" Content="Delimitada por setos" Margin="0,4"
+                                          ToolTip="Parcela delimitada con seto vegetal"/>
+                                <CheckBox x:Name="SombraCheckBox" Content="Situada en zona de sombra" Margin="0,4"
+                                          ToolTip="Cobertura arbórea o toldo de sombra"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Tarifas por temporada (€ / noche)">
+                            <StackPanel>
+                                <Grid Margin="0,4,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                            <Run Text="Baja"/>
+                                            <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                        </TextBlock>
+                                        <TextBox x:Name="PrecioBajaTextBox" Height="34" ToolTip="Tarifa temporada baja (oct-may)"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                            <Run Text="Media"/>
+                                            <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                        </TextBlock>
+                                        <TextBox x:Name="PrecioMediaTextBox" Height="34" ToolTip="Tarifa temporada media (abr, jun, sep)"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                            <Run Text="Alta"/>
+                                            <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                        </TextBlock>
+                                        <TextBox x:Name="PrecioAltaTextBox" Height="34" ToolTip="Tarifa temporada alta (jul-ago)"/>
+                                    </StackPanel>
+                                </Grid>
+                                <TextBlock Text="Se aplican automáticamente al calcular el importe estimado de reservas."
+                                           Foreground="{DynamicResource TextMutedBrush}" FontSize="12" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+
+                    <!-- Panel específico de Bungalow -->
+                    <StackPanel x:Name="BungalowPanel" Visibility="Collapsed">
+                        <GroupBox Header="Tarifa y estancia mínima" Margin="0,0,0,12">
+                            <Grid Margin="0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Precio por noche (€)"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBox x:Name="PrecioBungalowTextBox" Height="34" ToolTip="Precio por noche del bungalow"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4" Text="Estancia mínima (noches)"/>
+                                    <TextBox x:Name="EstanciaMinimaTextBox" Height="34"
+                                             ToolTip="Opcional: deje vacío si no exige mínimo de noches"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Equipamiento incluido" Margin="0,0,0,12">
+                            <UniformGrid Columns="2" Margin="4">
+                                <CheckBox x:Name="MenajeCheckBox" Content="Menaje completo" Margin="0,4"/>
+                                <CheckBox x:Name="WifiCheckBox" Content="Wi-Fi gratis" Margin="0,4"/>
+                                <CheckBox x:Name="MicroondasCheckBox" Content="Microondas" Margin="0,4"/>
+                                <CheckBox x:Name="TerrazaCheckBox" Content="Terraza privada" Margin="0,4"/>
+                                <CheckBox x:Name="RopaCamaCheckBox" Content="Ropa cama y toallas" Margin="0,4"/>
+                                <CheckBox x:Name="AireCheckBox" Content="Aire acondicionado" Margin="0,4"/>
+                            </UniformGrid>
+                        </GroupBox>
+
+                        <GroupBox Header="Galería de fotos">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="130"/>
+                                </Grid.ColumnDefinitions>
+                                <ListBox x:Name="FotosListBox" Height="110" SelectionChanged="FotosListBox_SelectionChanged"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="1"
+                                                    CornerRadius="4" Padding="2" Margin="2">
+                                                <Image Source="{Binding Converter={StaticResource ImagePathConverter}}"
+                                                       Width="105" Height="82" Stretch="UniformToFill"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                    <Button Content="＋ Añadir foto" Style="{StaticResource PrimaryButtonStyle}"
+                                            Margin="0,0,0,8" Click="AnadirFoto_Click"
+                                            ToolTip="Seleccionar una imagen desde el equipo"/>
+                                    <Button Content="🗑 Quitar foto" Style="{StaticResource DangerButtonStyle}"
+                                            Click="QuitarFoto_Click"
+                                            ToolTip="Quitar la foto seleccionada de la galería"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Error inline de validación -->
+        <Border x:Name="ErrorBorder" Grid.Row="2" Visibility="Collapsed"
+                Background="{DynamicResource DangerSoftBrush}"
+                BorderBrush="{DynamicResource DangerBrush}" BorderThickness="1"
+                CornerRadius="4" Padding="10,7" Margin="0,10,0,0">
+            <TextBlock x:Name="ErrorTextBlock" Foreground="{DynamicResource DangerBrush}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+        </Border>
+
+        <DockPanel Grid.Row="3" Margin="0,14,0,0">
+            <TextBlock VerticalAlignment="Center" Foreground="{DynamicResource TextMutedBrush}">
+                <Run Text="*" Foreground="{DynamicResource DangerBrush}" FontWeight="Bold"/>
+                <Run Text=" Campo obligatorio"/>
+            </TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar" Width="110" Margin="0,0,10,0" Style="{StaticResource SecondaryButtonStyle}"
+                        IsCancel="True" Click="Cancelar_Click" ToolTip="Cerrar sin guardar cambios"/>
+                <Button Content="Guardar" Width="130" Style="{StaticResource SuccessButtonStyle}"
+                        IsDefault="True" Click="Guardar_Click" ToolTip="Validar y guardar el alojamiento"/>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>

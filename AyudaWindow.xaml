@@ -1,49 +1,86 @@
 <Window x:Class="Trabajo_IPO.AyudaWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Ayuda y autoría" Height="560" Width="720"
-        WindowStartupLocation="CenterOwner" Background="#F5F7FA">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="32">
-            <TextBlock Text="Ayuda y autoría" FontSize="28" FontWeight="Bold" Foreground="#17324D"/>
-            <TextBlock Text="Guía rápida para utilizar el prototipo" Margin="0,6,0,22" Foreground="#52616B"/>
-            <GroupBox Header="Guía rápida" Padding="16" Margin="0,0,0,16">
-                <StackPanel>
-                    <TextBlock Text="• Alojamientos: consulte, añada, modifique o elimine parcelas y bungalows." TextWrapping="Wrap" Margin="0,4"/>
-                    <TextBlock Text="• Reservas: consulte las estancias y sus datos de cliente desde la pestaña Reservas." TextWrapping="Wrap" Margin="0,4"/>
-                    <TextBlock Text="• Empleados: consulte los guías y monitores temporales contratados." TextWrapping="Wrap" Margin="0,4"/>
-                    <TextBlock Text="• Actividades: consulte los horarios, monitores, cupos y zonas de verano." TextWrapping="Wrap" Margin="0,4"/>
-                    <TextBlock Text="• Los botones muestran una explicación adicional al mantener el cursor sobre ellos." TextWrapping="Wrap" Margin="0,4"/>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="Ayuda contextual y seguridad" Padding="16" Margin="0,0,0,16">
-                <StackPanel>
-                    <TextBlock Text="Los campos marcados con * son obligatorios. Las acciones de eliminación solicitan confirmación antes de modificar los datos." TextWrapping="Wrap" Margin="0,4"/>
-                    <TextBlock Text="Los datos de este prototipo se mantienen únicamente durante la sesión y no se guardan en una base de datos." TextWrapping="Wrap" Margin="0,4"/>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="Información de autoría" Padding="16">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Autores" FontWeight="SemiBold" Margin="0,4"/>
-                    <TextBlock Grid.Column="1" Text="Nombre Apellido 1 y Nombre Apellido 2" Margin="0,4"/>
-                    <TextBlock Grid.Row="1" Text="Asignatura" FontWeight="SemiBold" Margin="0,4"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Interacción Persona-Ordenador I" Margin="0,4"/>
-                    <TextBlock Grid.Row="2" Text="Curso" FontWeight="SemiBold" Margin="0,4"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="2026/2027" Margin="0,4"/>
-                    <TextBlock Grid.Row="3" Text="Versión" FontWeight="SemiBold" Margin="0,4"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="Prototipo 1.0 — 06/10/2026" Margin="0,4"/>
-                </Grid>
-            </GroupBox>
+        Title="Ayuda y documentación del sistema" Height="620" Width="880"
+        MinHeight="500" MinWidth="700"
+        WindowStartupLocation="CenterOwner"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Background="{DynamicResource AppBgBrush}">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="0,0,0,14">
+            <TextBlock Text="Ayuda, atajos de teclado e información de autoría" FontSize="22" FontWeight="Bold"
+                       Foreground="{DynamicResource HeaderBgBrush}"/>
+            <TextBlock Text="Guía orientada a tareas para el personal gestor del complejo turístico rural"
+                       Foreground="{DynamicResource TextMutedBrush}" Margin="0,3,0,0"/>
         </StackPanel>
-    </ScrollViewer>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushSoft}"
+                    BorderThickness="1" CornerRadius="6" Padding="8">
+                <ListBox x:Name="TemasListBox" BorderThickness="0" Background="Transparent"
+                         SelectionChanged="TemasListBox_SelectionChanged"
+                         ToolTip="Seleccione un apartado de la documentación">
+                    <ListBoxItem Content="Primeros pasos" Padding="10,9" IsSelected="True"/>
+                    <ListBoxItem Content="Alojamientos" Padding="10,9"/>
+                    <ListBoxItem Content="Disponibilidad" Padding="10,9"/>
+                    <ListBoxItem Content="Reservas" Padding="10,9"/>
+                    <ListBoxItem Content="Empleados" Padding="10,9"/>
+                    <ListBoxItem Content="Actividades" Padding="10,9"/>
+                    <ListBoxItem Content="Atajos y accesibilidad" Padding="10,9"/>
+                    <ListBoxItem Content="Acerca de" Padding="10,9"/>
+                </ListBox>
+            </Border>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <GroupBox x:Name="ContenidoGroupBox" Header="Primeros pasos" Padding="16" Margin="0,0,0,12">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <TextBlock x:Name="ContenidoTextBlock" TextWrapping="Wrap" LineHeight="22"/>
+                    </ScrollViewer>
+                </GroupBox>
+
+                <GroupBox Grid.Row="1" Header="Información de autoría" Padding="14">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Autores:" FontWeight="Bold" Margin="0,3"/>
+                        <TextBlock Grid.Column="1" Text="Javier Herreros Pinilla y Miguel Gómez-Carreño Rodríguez-Escalona" Margin="0,3"/>
+                        <TextBlock Grid.Row="1" Text="Asignatura:" FontWeight="Bold" Margin="0,3"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Interacción Persona-Ordenador I · Grado en Ingeniería Informática (UCLM)" Margin="0,3"/>
+                        <TextBlock Grid.Row="2" Text="Versión:" FontWeight="Bold" Margin="0,3"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="Prototipo 2.0 · Curso 2026/2027" Margin="0,3"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <Button Content="Cerrar" Width="110" Style="{StaticResource PrimaryButtonStyle}"
+                    IsCancel="True" IsDefault="True" Click="Cerrar_Click"
+                    ToolTip="Cerrar la ventana de ayuda (Esc)"/>
+        </StackPanel>
+    </Grid>
 </Window>

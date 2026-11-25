@@ -75,6 +75,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="EmpleadoFormWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ActividadFormWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -99,8 +107,40 @@
       <DependentUpon>ReservaFormWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EmpleadoFormWindow.xaml.cs">
+      <DependentUpon>EmpleadoFormWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ActividadFormWindow.xaml.cs">
+      <DependentUpon>ActividadFormWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Modelos.cs" />
     <Compile Include="DatosPrueba.cs" />
+    <Compile Include="Converters.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\logo_camping.png" />
+    <Resource Include="Assets\avatar_laura.png" />
+    <Resource Include="Assets\avatar_javier.png" />
+    <Resource Include="Assets\avatar_maria.png" />
+    <Resource Include="Assets\emp_eva.png" />
+    <Resource Include="Assets\emp_luis.png" />
+    <Resource Include="Assets\emp_ana.png" />
+    <Resource Include="Assets\emp_pablo.png" />
+    <Resource Include="Assets\emp_carla.png" />
+    <Resource Include="Assets\bungalow_familiar_1.png" />
+    <Resource Include="Assets\bungalow_familiar_2.png" />
+    <Resource Include="Assets\bungalow_pareja_1.png" />
+    <Resource Include="Assets\bungalow_pareja_2.png" />
+    <Resource Include="Assets\bungalow_bosque_1.png" />
+    <Resource Include="Assets\parcela_piscina.png" />
+    <Resource Include="Assets\parcela_autocaravana.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\*.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -1,78 +1,180 @@
 <Window x:Class="Trabajo_IPO.ReservaFormWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Reserva" Width="560" Height="540"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
-        Background="#F5F7FA">
-    <Grid Margin="28">
+        Title="Reserva de alojamiento" Width="900" Height="680"
+        MinWidth="800" MinHeight="620"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Background="{DynamicResource AppBgBrush}">
+    <Grid Margin="22">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="TituloTextBlock" Text="Nueva reserva" FontSize="24"
-                   FontWeight="Bold" Foreground="#17324D" Margin="0,0,0,22"/>
 
-        <Grid Grid.Row="1" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Alojamiento *" VerticalAlignment="Center"/>
-            <ComboBox x:Name="AlojamientoComboBox" Grid.Column="1" Height="30"
-                      DisplayMemberPath="Codigo"
-                      ToolTip="Seleccione el alojamiento que ocupará el cliente"/>
-        </Grid>
-        <Grid Grid.Row="2" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Fecha de entrada *" VerticalAlignment="Center"/>
-            <DatePicker x:Name="EntradaDatePicker" Grid.Column="1" Height="30"
-                        ToolTip="Seleccione el primer día de la estancia"/>
-        </Grid>
-        <Grid Grid.Row="3" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Fecha de salida *" VerticalAlignment="Center"/>
-            <DatePicker x:Name="SalidaDatePicker" Grid.Column="1" Height="30"
-                        ToolTip="Seleccione el día posterior al último día de la estancia"/>
-        </Grid>
-        <Grid Grid.Row="4" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Persona que reserva *" VerticalAlignment="Center"/>
-            <TextBox x:Name="ClienteTextBox" Grid.Column="1" Height="30"
-                     ToolTip="Nombre y apellidos de la persona responsable de la reserva"/>
-        </Grid>
-        <Grid Grid.Row="5" Margin="0,0,0,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Número de ocupantes *" VerticalAlignment="Center"/>
-            <TextBox x:Name="OcupantesTextBox" Grid.Column="1" Height="30"
-                     ToolTip="Número de personas que ocuparán el alojamiento"/>
-        </Grid>
-        <TextBlock Grid.Row="6" Text="La fecha de salida debe ser posterior a la fecha de entrada."
-                   Foreground="#52616B" TextWrapping="Wrap" Margin="170,0,0,10"/>
-        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Cancelar" Width="100" Height="34" Margin="0,0,10,0"
-                    IsCancel="True" Click="Cancelar_Click"
-                    ToolTip="Cerrar sin guardar cambios"/>
-            <Button Content="Guardar" Width="110" Height="34" Background="#2E7D32"
-                    Foreground="White" FontWeight="Bold" IsDefault="True"
-                    Click="Guardar_Click" ToolTip="Validar y guardar la reserva"/>
-        </StackPanel>
+        <DockPanel Margin="0,0,0,14">
+            <TextBlock x:Name="TituloTextBlock" Text="Nueva reserva" FontSize="22"
+                       FontWeight="Bold" Foreground="{DynamicResource HeaderBgBrush}" VerticalAlignment="Center"/>
+            <Button Content="? Ayuda" Style="{StaticResource SecondaryButtonStyle}"
+                    HorizontalAlignment="Right" Click="Ayuda_Click"
+                    ToolTip="Abrir ayuda sobre reservas (F1)"/>
+        </DockPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="1.15*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Bloque 1: Persona que reserva -->
+                    <GroupBox Header="Persona que reserva" Grid.Column="0">
+                        <StackPanel>
+                            <TextBlock FontWeight="SemiBold" Margin="0,4,0,4">
+                                <Run Text="Nombre y apellidos"/>
+                                <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                            </TextBlock>
+                            <TextBox x:Name="ClienteTextBox" Height="34" Margin="0,0,0,12"
+                                     ToolTip="Nombre y apellidos de la persona titular de la reserva"/>
+
+                            <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                <Run Text="Teléfono(s) de contacto"/>
+                                <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                            </TextBlock>
+                            <TextBox x:Name="TelefonosTextBox" Height="34" Margin="0,0,0,12"
+                                     ToolTip="Obligatorio: uno o varios teléfonos separados por coma (ej. 600 123 456)"/>
+
+                            <TextBlock FontWeight="SemiBold" Margin="0,0,0,4" Text="Correo electrónico (opcional)"/>
+                            <TextBox x:Name="EmailTextBox" Height="34" Margin="0,0,0,8"
+                                     ToolTip="Opcional: dirección de correo válida del cliente"/>
+
+                            <TextBlock Text="El teléfono es obligatorio; el correo electrónico es opcional."
+                                       Foreground="{DynamicResource TextMutedBrush}" FontSize="12"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Bloque 2: Estancia -->
+                    <GroupBox Header="Estancia y alojamiento" Grid.Column="2">
+                        <StackPanel>
+                            <TextBlock FontWeight="SemiBold" Margin="0,4,0,4">
+                                <Run Text="Alojamiento disponible"/>
+                                <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                            </TextBlock>
+                            <ComboBox x:Name="AlojamientoComboBox" Height="34" Margin="0,0,0,12"
+                                      DisplayMemberPath="EtiquetaCombo"
+                                      SelectionChanged="DatosEstancia_Changed"
+                                      ToolTip="Solo se muestran alojamientos operativos (no en reparación)"/>
+
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Fecha de entrada"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <DatePicker x:Name="EntradaDatePicker" Height="34"
+                                                SelectedDateChanged="DatosEstancia_Changed"
+                                                ToolTip="Primer día de estancia"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Fecha de salida"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <DatePicker x:Name="SalidaDatePicker" Height="34"
+                                                SelectedDateChanged="DatosEstancia_Changed"
+                                                ToolTip="Día de salida (posterior a la entrada)"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4" Text="Hora est. entrada"/>
+                                    <TextBox x:Name="HoraEntradaTextBox" Height="34" Text="16:00"
+                                             ToolTip="Hora estimada de llegada (HH:mm)"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4" Text="Hora est. salida"/>
+                                    <TextBox x:Name="HoraSalidaTextBox" Height="34" Text="11:00"
+                                             ToolTip="Hora estimada de salida (HH:mm)"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Ocupantes"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBox x:Name="OcupantesTextBox" Height="34"
+                                             ToolTip="Número de ocupantes (no puede superar la capacidad)"/>
+                                </StackPanel>
+                            </Grid>
+                            <TextBlock x:Name="CapacidadInfoTextBlock" Margin="0,8,0,0"
+                                       Foreground="{DynamicResource PrimaryBrush}" FontWeight="SemiBold" FontSize="12"/>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+
+                <!-- Bloque 3: Solicitudes especiales -->
+                <GroupBox Header="Solicitudes especiales y observaciones">
+                    <StackPanel>
+                        <WrapPanel Margin="0,4,0,10">
+                            <CheckBox x:Name="CunaCheckBox" Content="Necesita cuna" Margin="0,0,22,4"
+                                      ToolTip="Solicitar cuna infantil en bungalow"/>
+                            <CheckBox x:Name="MenajeCheckBox" Content="Menaje concreto" Margin="0,0,22,4"
+                                      ToolTip="Solicitar equipamiento o menaje adicional"/>
+                            <CheckBox x:Name="MovilidadCheckBox" Content="Movilidad reducida / accesibilidad" Margin="0,0,22,4"
+                                      ToolTip="Adaptación por movilidad reducida"/>
+                        </WrapPanel>
+                        <TextBox x:Name="SolicitudesTextBox" Height="68" TextWrapping="Wrap"
+                                 AcceptsReturn="True" VerticalContentAlignment="Top"
+                                 VerticalScrollBarVisibility="Auto"
+                                 ToolTip="Observaciones adicionales del cliente"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Resumen dinámico de noches, temporada e importe -->
+        <Border Grid.Row="2" Background="#E8F1FA" BorderBrush="#1565C0" BorderThickness="1"
+                CornerRadius="5" Padding="12,9" Margin="0,12,0,0">
+            <TextBlock x:Name="ResumenImporteTextBlock" Foreground="#1565C0" FontWeight="Bold"
+                       Text="Seleccione alojamiento y fechas para calcular noches e importe estimado."/>
+        </Border>
+
+        <!-- Error inline -->
+        <Border x:Name="ErrorBorder" Grid.Row="3" Visibility="Collapsed"
+                Background="{DynamicResource DangerSoftBrush}"
+                BorderBrush="{DynamicResource DangerBrush}" BorderThickness="1"
+                CornerRadius="4" Padding="10,7" Margin="0,10,0,0">
+            <TextBlock x:Name="ErrorTextBlock" Foreground="{DynamicResource DangerBrush}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+        </Border>
+
+        <DockPanel Grid.Row="4" Margin="0,14,0,0">
+            <TextBlock VerticalAlignment="Center" Foreground="{DynamicResource TextMutedBrush}">
+                <Run Text="*" Foreground="{DynamicResource DangerBrush}" FontWeight="Bold"/>
+                <Run Text=" Campo obligatorio · Se validan solapamientos, capacidad y estancia mínima"/>
+            </TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar" Width="110" Margin="0,0,10,0" Style="{StaticResource SecondaryButtonStyle}"
+                        IsCancel="True" Click="Cancelar_Click" ToolTip="Cerrar sin guardar cambios"/>
+                <Button Content="Guardar reserva" Width="145" Style="{StaticResource SuccessButtonStyle}"
+                        IsDefault="True" Click="Guardar_Click" ToolTip="Validar y guardar la reserva"/>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>

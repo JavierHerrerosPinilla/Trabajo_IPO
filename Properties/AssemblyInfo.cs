@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -7,12 +7,12 @@ using System.Windows;
 // La información general de un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
-[assembly: AssemblyTitle("Trabajo_IPO")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Trabajo_IPO — Gestión de Complejo Turístico Rural")]
+[assembly: AssemblyDescription("Prototipo WPF de gestión de complejo turístico rural o camping (IPO I - UCLM)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HP")]
-[assembly: AssemblyProduct("Trabajo_IPO")]
-[assembly: AssemblyCopyright("Copyright © HP 2026")]
+[assembly: AssemblyCompany("UCLM — ESI (Javier Herreros Pinilla y Miguel Gómez-Carreño Rodríguez-Escalona)")]
+[assembly: AssemblyProduct("Gestión de Complejo Turístico Rural")]
+[assembly: AssemblyCopyright("Copyright © 2026-2027 Javier Herreros Pinilla y Miguel Gómez-Carreño Rodríguez-Escalona")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -48,5 +48,5 @@ using System.Windows;
 //      Número de compilación
 //      Revisión
 //
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]

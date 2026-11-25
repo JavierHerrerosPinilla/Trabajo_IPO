@@ -1,0 +1,178 @@
+<Window x:Class="Trabajo_IPO.EmpleadoFormWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Empleado temporal" Width="860" Height="640"
+        MinWidth="760" MinHeight="580"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Background="{DynamicResource AppBgBrush}">
+    <Grid Margin="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Margin="0,0,0,14">
+            <TextBlock x:Name="TituloTextBlock" Text="Nuevo empleado temporal" FontSize="22"
+                       FontWeight="Bold" Foreground="{DynamicResource HeaderBgBrush}" VerticalAlignment="Center"/>
+            <Button Content="? Ayuda" Style="{StaticResource SecondaryButtonStyle}"
+                    HorizontalAlignment="Right" Click="Ayuda_Click"
+                    ToolTip="Abrir ayuda sobre empleados (F1)"/>
+        </DockPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Grid Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="210"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Foto reciente -->
+                    <GroupBox Header="Foto reciente">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Border Width="140" Height="140" CornerRadius="8" BorderBrush="{DynamicResource BorderBrushSoft}"
+                                    BorderThickness="1" Background="#EAEFF5" Margin="0,6,0,10">
+                                <Image x:Name="FotoImage" Stretch="UniformToFill"/>
+                            </Border>
+                            <Button Content="Cambiar foto..." Style="{StaticResource SecondaryButtonStyle}"
+                                    Click="CambiarFoto_Click" ToolTip="Elegir imagen del empleado desde el equipo"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Datos personales -->
+                    <GroupBox Header="Datos personales y de contacto" Grid.Column="2">
+                        <StackPanel>
+                            <Grid Margin="0,4,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Nombre"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBox x:Name="NombreTextBox" Height="34" ToolTip="Nombre del empleado"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Apellidos"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBox x:Name="ApellidosTextBox" Height="34" ToolTip="Apellidos del empleado"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.85*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="1.1*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Función"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <ComboBox x:Name="TipoComboBox" Height="34" ToolTip="Rol asignado en el complejo">
+                                        <ComboBoxItem Content="Monitor"/>
+                                        <ComboBoxItem Content="Monitora"/>
+                                        <ComboBoxItem Content="Guía"/>
+                                        <ComboBoxItem Content="Guía y monitor"/>
+                                        <ComboBoxItem Content="Guía y monitora"/>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Teléfono(s)"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBox x:Name="TelefonoTextBox" Height="34" ToolTip="Uno o varios teléfonos separados por coma"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Correo(s) electrónico(s)"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBox x:Name="EmailTextBox" Height="34" ToolTip="Uno o varios correos separados por coma"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <TextBlock FontWeight="SemiBold" Margin="0,0,0,4" Text="Formación y titulaciones"/>
+                            <TextBox x:Name="FormacionTextBox" Height="34" ToolTip="Titulación, cursos y experiencia relevante"/>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+
+                <!-- Idiomas -->
+                <GroupBox Header="Idiomas" Margin="0,0,0,12">
+                    <Grid Margin="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <WrapPanel VerticalAlignment="Center">
+                            <CheckBox x:Name="EspanolCheckBox" Content="Español" IsChecked="True" Margin="0,0,18,0"/>
+                            <CheckBox x:Name="InglesCheckBox" Content="Inglés" Margin="0,0,18,0"/>
+                            <CheckBox x:Name="FrancesCheckBox" Content="Francés" Margin="0,0,18,0"/>
+                            <CheckBox x:Name="AlemanCheckBox" Content="Alemán" Margin="0,0,18,0"/>
+                        </WrapPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock Text="Otros:" VerticalAlignment="Center" Margin="8,0,8,0" FontWeight="SemiBold"/>
+                            <TextBox x:Name="OtrosIdiomasTextBox" Width="220" Height="32" ToolTip="Otros idiomas separados por coma"/>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+
+                <!-- Restricciones de disponibilidad -->
+                <GroupBox Header="Restricciones de disponibilidad (marque los días NO disponibles)">
+                    <Grid Margin="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <WrapPanel VerticalAlignment="Center">
+                            <CheckBox x:Name="NoLunCheckBox" Content="Lun" Margin="0,0,14,0"/>
+                            <CheckBox x:Name="NoMarCheckBox" Content="Mar" Margin="0,0,14,0"/>
+                            <CheckBox x:Name="NoMieCheckBox" Content="Mié" Margin="0,0,14,0"/>
+                            <CheckBox x:Name="NoJueCheckBox" Content="Jue" Margin="0,0,14,0"/>
+                            <CheckBox x:Name="NoVieCheckBox" Content="Vie" Margin="0,0,14,0"/>
+                            <CheckBox x:Name="NoSabCheckBox" Content="Sáb" Margin="0,0,14,0"/>
+                            <CheckBox x:Name="NoDomCheckBox" Content="Dom" Margin="0,0,8,0"/>
+                        </WrapPanel>
+                        <TextBox x:Name="ObsDisponibilidadTextBox" Grid.Column="2" Height="32"
+                                 ToolTip="Observaciones adicionales de horario o turnos"/>
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border x:Name="ErrorBorder" Grid.Row="2" Visibility="Collapsed"
+                Background="{DynamicResource DangerSoftBrush}"
+                BorderBrush="{DynamicResource DangerBrush}" BorderThickness="1"
+                CornerRadius="4" Padding="10,7" Margin="0,10,0,0">
+            <TextBlock x:Name="ErrorTextBlock" Foreground="{DynamicResource DangerBrush}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+        </Border>
+
+        <DockPanel Grid.Row="3" Margin="0,14,0,0">
+            <TextBlock VerticalAlignment="Center" Foreground="{DynamicResource TextMutedBrush}">
+                <Run Text="*" Foreground="{DynamicResource DangerBrush}" FontWeight="Bold"/>
+                <Run Text=" Campo obligatorio"/>
+            </TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar" Width="110" Margin="0,0,10,0" Style="{StaticResource SecondaryButtonStyle}"
+                        IsCancel="True" Click="Cancelar_Click" ToolTip="Cerrar sin guardar cambios"/>
+                <Button Content="Guardar" Width="130" Style="{StaticResource SuccessButtonStyle}"
+                        IsDefault="True" Click="Guardar_Click" ToolTip="Validar y guardar el empleado"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Window>

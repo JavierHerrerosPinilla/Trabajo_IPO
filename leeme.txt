@@ -1,31 +1,38 @@
-TRABAJO IPO - PROTOTIPO DE GESTIÓN DE COMPLEJO TURÍSTICO
-=========================================================
+TRABAJO IPO - PROTOTIPO DE GESTIÓN DE COMPLEJO TURÍSTICO RURAL
+===============================================================
 
 Autores
 -------
-Integrantes del grupo:
-- [NOMBRE Y APELLIDOS DE LA PERSONA 1]
-- [NOMBRE Y APELLIDOS DE LA PERSONA 2]
+Integrantes del grupo (Grado en Ingeniería Informática - ESI, UCLM):
+- Javier Herreros Pinilla (50 %)
+- Miguel Gómez-Carreño Rodríguez-Escalona (50 %)
+
+Asignatura: Interacción Persona-Ordenador I
+Curso académico: 2026/2027
+Versión: Prototipo 2.0
 
 Aplicación
------------
-Prototipo de escritorio desarrollado con WPF y C# para la gestión de
-alojamientos, reservas, empleados temporales y actividades de verano.
+----------
+Prototipo de aplicación interactiva de escritorio desarrollado con C# y WPF
+(.NET Framework 4.7.2) para la gestión integral de un complejo turístico rural
+o camping: alojamientos (parcelas y bungalows), cuadrante de disponibilidad por
+fechas, reservas, empleados temporales (guías y monitores) y actividades de
+verano.
 
 Requisitos
 ----------
-- Windows con .NET Framework 4.7.2 o superior compatible con el proyecto.
-- Visual Studio con la carga de trabajo "Desarrollo de escritorio .NET".
-- No se requiere base de datos: los datos de demostración se mantienen en memoria
-  durante la sesión de la aplicación.
+- Windows 10 / 11 con .NET Framework 4.7.2 o superior compatible.
+- Visual Studio 2019 / 2022 con la carga de trabajo "Desarrollo de escritorio .NET".
+- No se requiere base de datos externa: los datos de prueba e imágenes se
+  incluyen en el proyecto y se mantienen en memoria durante la sesión.
 
 Cómo ejecutar
 -------------
-1. Abrir Trabajo_IPO.sln en Visual Studio.
-2. Seleccionar la configuración Debug o Release.
-3. Compilar la solución.
-4. Ejecutar el proyecto Trabajo_IPO.
-5. Utilizar una de las credenciales de prueba indicadas a continuación.
+1. Abrir `Trabajo_IPO.sln` en Visual Studio.
+2. Seleccionar la configuración `Debug` o `Release`.
+3. Establecer `Trabajo_IPO` como proyecto de inicio.
+4. Compilar la solución (`Ctrl+Shift+B`) y ejecutar (`F5` o `Ctrl+F5`).
+5. Iniciar sesión con cualquiera de las credenciales de prueba indicadas abajo.
 
 Datos de autenticación para probar el funcionamiento
 -----------------------------------------------------
@@ -40,18 +47,29 @@ Password: bienvenido
 
 Funcionalidades principales
 ---------------------------
-- Inicio de sesión con validación de credenciales.
-- Consulta del perfil del gestor y del último acceso.
-- Alta, modificación y baja de alojamientos.
-- Alta, modificación y cancelación de reservas.
-- Consulta de empleados temporales y actividades.
-- Ayuda contextual mediante tooltips.
-- Ayuda general e información de autoría.
-- Confirmación antes de eliminar datos.
-- Cambio opcional entre tamaño de fuente normal y grande.
+- Inicio de sesión con validación inline, opción "Mostrar contraseña", botón de
+  ayuda (F1) y salida confirmada.
+- Encabezado persistente con datos y foto del gestor, rol y fecha del último
+  acceso, adaptación accesible (A-, A, A+, Alto Contraste), Ayuda, Cerrar
+  sesión y Salir.
+- Gestión completa (alta, edición, consulta Master/Detail, filtros y baja con
+  confirmación) de:
+  * Alojamientos (parcelas con tarifas por temporada y servicios; bungalows con
+    estancia mínima opcional, equipamiento y galería de fotos).
+  * Disponibilidad (cuadrante quincenal interactivo con estados codificados por
+    color, icono y texto).
+  * Reservas (teléfono obligatorio, email opcional, horas estimadas, cálculo de
+    noches e importe por temporada, control de capacidad, estancia mínima y
+    anti-solapamiento).
+  * Empleados temporales (foto reciente, teléfonos, correos, idiomas, formación,
+    restricciones por día y aviso al dar de baja si tiene actividades).
+  * Actividades de verano (horarios, cupos mín/máx, precios hora/mes, múltiples
+    monitores con detección automática de solapes e indisponibilidad).
+- Atajos de teclado: F1 (Ayuda), Ctrl+1..5 (Pestañas), Ctrl+N (Nuevo),
+  Ctrl+E (Editar), Supr (Eliminar).
 
 Observaciones
 -------------
-Este proyecto es un prototipo académico. Al cerrar la aplicación se pierden
-los cambios realizados durante la sesión, ya que el enunciado no exige
-persistencia real.
+Al tratarse de un prototipo centrado en el diseño de la GUI, los cambios
+realizados durante la ejecución se mantienen en memoria y se pierden al cerrar
+la aplicación.

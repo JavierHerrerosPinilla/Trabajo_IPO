@@ -1,0 +1,230 @@
+<Window x:Class="Trabajo_IPO.ActividadFormWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Actividad de verano" Width="900" Height="680"
+        MinWidth="800" MinHeight="600"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Background="{DynamicResource AppBgBrush}">
+    <Grid Margin="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Margin="0,0,0,14">
+            <TextBlock x:Name="TituloTextBlock" Text="Nueva actividad de verano" FontSize="22"
+                       FontWeight="Bold" Foreground="{DynamicResource HeaderBgBrush}" VerticalAlignment="Center"/>
+            <Button Content="? Ayuda" Style="{StaticResource SecondaryButtonStyle}"
+                    HorizontalAlignment="Right" Click="Ayuda_Click"
+                    ToolTip="Abrir ayuda sobre actividades (F1)"/>
+        </DockPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Grid Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Datos de la actividad -->
+                    <GroupBox Header="Datos de la actividad">
+                        <StackPanel>
+                            <TextBlock FontWeight="SemiBold" Margin="0,4,0,4">
+                                <Run Text="Nombre de la actividad"/>
+                                <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                            </TextBlock>
+                            <TextBox x:Name="NombreTextBox" Height="34" Margin="0,0,0,10" ToolTip="Título de la actividad"/>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.2*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Área del camping"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <ComboBox x:Name="ZonaComboBox" Height="34" IsEditable="True" ToolTip="Zona donde se imparte">
+                                        <ComboBoxItem Content="Pista deportiva"/>
+                                        <ComboBoxItem Content="Piscina"/>
+                                        <ComboBoxItem Content="Zona verde"/>
+                                        <ComboBoxItem Content="Entrada y sendero norte"/>
+                                        <ComboBoxItem Content="Sala común infantil"/>
+                                        <ComboBoxItem Content="Bosque norte"/>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Destinatarios"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <StackPanel Orientation="Horizontal" Height="34" VerticalAlignment="Center">
+                                        <RadioButton x:Name="DestNiñosRadio" Content="Niños" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                        <RadioButton x:Name="DestAdultosRadio" Content="Adultos" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                        <RadioButton x:Name="DestTodosRadio" Content="Todos" IsChecked="True" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+
+                            <TextBlock FontWeight="SemiBold" Margin="0,0,0,4" Text="Descripción"/>
+                            <TextBox x:Name="DescripcionTextBox" Height="74" TextWrapping="Wrap"
+                                     AcceptsReturn="True" VerticalContentAlignment="Top"
+                                     VerticalScrollBarVisibility="Auto" ToolTip="Breve descripción de la actividad"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Horario y cupos -->
+                    <GroupBox Header="Horario y cupos" Grid.Column="2">
+                        <StackPanel>
+                            <Grid Margin="0,4,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Hora de inicio (HH:mm)"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBox x:Name="HoraInicioTextBox" Height="34" Text="10:00"
+                                             TextChanged="HorarioOMonitor_Changed" ToolTip="Formato HH:mm (ej. 10:00)"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Hora de fin (HH:mm)"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBox x:Name="HoraFinTextBox" Height="34" Text="11:00"
+                                             TextChanged="HorarioOMonitor_Changed" ToolTip="Debe ser posterior a la hora de inicio"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <TextBlock FontWeight="SemiBold" Margin="0,0,0,6">
+                                <Run Text="Días de la semana"/>
+                                <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                            </TextBlock>
+                            <WrapPanel Margin="0,0,0,12">
+                                <CheckBox x:Name="DiaLunCheckBox" Content="Lun" Margin="0,0,14,4" Checked="Dia_Changed" Unchecked="Dia_Changed"/>
+                                <CheckBox x:Name="DiaMarCheckBox" Content="Mar" Margin="0,0,14,4" Checked="Dia_Changed" Unchecked="Dia_Changed"/>
+                                <CheckBox x:Name="DiaMieCheckBox" Content="Mié" Margin="0,0,14,4" Checked="Dia_Changed" Unchecked="Dia_Changed"/>
+                                <CheckBox x:Name="DiaJueCheckBox" Content="Jue" Margin="0,0,14,4" Checked="Dia_Changed" Unchecked="Dia_Changed"/>
+                                <CheckBox x:Name="DiaVieCheckBox" Content="Vie" Margin="0,0,14,4" Checked="Dia_Changed" Unchecked="Dia_Changed"/>
+                                <CheckBox x:Name="DiaSabCheckBox" Content="Sáb" Margin="0,0,14,4" Checked="Dia_Changed" Unchecked="Dia_Changed"/>
+                                <CheckBox x:Name="DiaDomCheckBox" Content="Dom" Margin="0,0,8,4" Checked="Dia_Changed" Unchecked="Dia_Changed"/>
+                            </WrapPanel>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Cupo mínimo"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBox x:Name="CupoMinTextBox" Height="34" ToolTip="Mínimo de inscritos para celebrarse"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock FontWeight="SemiBold" Margin="0,0,0,4">
+                                        <Run Text="Cupo máximo"/>
+                                        <Run Text=" *" Foreground="{DynamicResource DangerBrush}"/>
+                                    </TextBlock>
+                                    <TextBox x:Name="CupoMaxTextBox" Height="34" ToolTip="Máximo de plazas (mayor o igual al mínimo)"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+
+                <Grid Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Tarifas -->
+                    <GroupBox Header="Tarifas (indique al menos un precio)">
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold" Margin="0,0,0,4" Text="Precio por hora (€)"/>
+                                <TextBox x:Name="PrecioHoraTextBox" Height="34" ToolTip="Importe por sesión/hora"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock FontWeight="SemiBold" Margin="0,0,0,4" Text="Precio por mes (€)"/>
+                                <TextBox x:Name="PrecioMesTextBox" Height="34" ToolTip="Bono mensual opcional"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Monitores responsables -->
+                    <GroupBox Header="Monitores / guías responsables *" Grid.Column="2">
+                        <ItemsControl x:Name="MonitoresItemsControl" MaxHeight="95">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Nombre}" IsChecked="{Binding Seleccionado}"
+                                              Margin="0,4,16,4" Checked="MonitorCheck_Changed" Unchecked="MonitorCheck_Changed"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </GroupBox>
+                </Grid>
+
+                <!-- Materiales -->
+                <GroupBox Header="Materiales o equipamiento necesarios">
+                    <TextBox x:Name="MaterialesTextBox" Height="36" ToolTip="Material requerido para desarrollar la actividad"/>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Aviso de conflicto / indisponibilidad de monitor (ACT-12) -->
+        <Border x:Name="AvisoMonitorBorder" Grid.Row="2" Visibility="Collapsed"
+                Background="{DynamicResource WarningSoftBrush}"
+                BorderBrush="{DynamicResource WarningBrush}" BorderThickness="1"
+                CornerRadius="4" Padding="10,7" Margin="0,10,0,0">
+            <TextBlock x:Name="AvisoMonitorTextBlock" Foreground="{DynamicResource WarningBrush}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+        </Border>
+
+        <!-- Error inline -->
+        <Border x:Name="ErrorBorder" Grid.Row="3" Visibility="Collapsed"
+                Background="{DynamicResource DangerSoftBrush}"
+                BorderBrush="{DynamicResource DangerBrush}" BorderThickness="1"
+                CornerRadius="4" Padding="10,7" Margin="0,8,0,0">
+            <TextBlock x:Name="ErrorTextBlock" Foreground="{DynamicResource DangerBrush}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+        </Border>
+
+        <DockPanel Grid.Row="4" Margin="0,14,0,0">
+            <TextBlock VerticalAlignment="Center" Foreground="{DynamicResource TextMutedBrush}">
+                <Run Text="*" Foreground="{DynamicResource DangerBrush}" FontWeight="Bold"/>
+                <Run Text=" Campo obligatorio · Se comprueban solapes y disponibilidad de monitores"/>
+            </TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar" Width="110" Margin="0,0,10,0" Style="{StaticResource SecondaryButtonStyle}"
+                        IsCancel="True" Click="Cancelar_Click" ToolTip="Cerrar sin guardar cambios"/>
+                <Button Content="Guardar" Width="130" Style="{StaticResource SuccessButtonStyle}"
+                        IsDefault="True" Click="Guardar_Click" ToolTip="Validar y guardar la actividad"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Window>

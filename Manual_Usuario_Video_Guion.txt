@@ -1,0 +1,86 @@
+GUION DEL MANUAL DE USUARIO EN VÍDEO (MS TEAMS)
+================================================
+Proyecto: Gestión de Complejo Turístico Rural — Prototipo WPF (IPO I, 2026/2027)
+Autores: Javier Herreros Pinilla y Miguel Gómez-Carreño Rodríguez-Escalona
+Duración recomendada: 4 a 6 minutos
+
+---
+INSTRUCCIONES PREVIAS PARA LA GRABACIÓN EN MS TEAMS
+1. Abrir `Trabajo_IPO.sln` en Visual Studio y ejecutar el proyecto (`Ctrl+F5`).
+2. En Microsoft Teams, iniciar una reunión ("Reunirse ahora"), compartir la
+   pantalla completa o la ventana de la aplicación y pulsar "Iniciar grabación".
+3. Si el vídeo final supera el límite de subida de Campus Virtual, subirlo a
+   YouTube (Oculto), OneDrive UCLM o Google Drive y entregar dentro del `.zip`
+   un archivo `enlace_video.txt` con la URL verificada sin restricciones.
+
+---
+ESCENAS DEL VÍDEO DEMOSTRACIÓN
+
+[00:00 - 00:35] 1. Presentación e Inicio de sesión (LoginWindow)
+- Mostrar la ventana de acceso al complejo turístico.
+- Explicar brevemente que es un prototipo WPF (.NET 4.7.2) para el gestor del
+  complejo.
+- Probar primero unas credenciales erróneas (ej. admin / 1234) para mostrar el
+  mensaje de error inline junto al formulario y activar "Mostrar contraseña".
+- Pulsar "? Ayuda" (o F1) brevemente para mostrar que la ayuda es accesible
+  desde el arranque.
+- Iniciar sesión con `admin` / `camping2026`.
+
+[00:35 - 01:15] 2. Ventana principal, cabecera, adaptación y navegación
+- Señalar la cabecera: logotipo, datos del gestor autenticado, foto de perfil y
+  fecha/hora del último acceso.
+- Demostrar los botones de accesibilidad: `A+`, `A-`, `A` y el modo `Contraste`.
+- Explicar las 5 pestañas superiores (1..5) y la barra de estado inferior con
+  feedback dinámico y atajos (`Ctrl+1..5`, `Ctrl+N`, `Ctrl+E`, `Supr`, `F1`).
+
+[01:15 - 02:15] 3. Módulo 1: Alojamientos (Parcelas y Bungalows)
+- Filtrar por Tipo ("Bungalow") y seleccionar `B-02` para mostrar la ficha
+  Master/Detail inferior y su galería de fotografías interactiva.
+- Pulsar "+ Nuevo alojamiento" (`Ctrl+N`), probar un código duplicado (`P-01`)
+  para enseñar la prevención de errores y luego crear `P-30` (Parcela Deluxe)
+  con sus servicios y tarifas por temporada (baja, media, alta).
+- Cambiar manualmente el estado de un alojamiento y mostrar la confirmación con
+  aviso cuando se intenta eliminar un alojamiento con reservas activas (pulsando
+  "No", que es la opción predeterminada).
+
+[02:15 - 02:55] 4. Módulo 2: Cuadrante de Disponibilidad
+- Cambiar a la pestaña `2. Disponibilidad` (`Ctrl+2`).
+- Navegar con `◀ Anterior` / `Siguiente ▶` y señalar la leyenda accesible
+  (color + icono + texto para Libre, Ocupada, Reservada, En reparación y
+  Pendiente de limpieza).
+- Hacer clic sobre una celda `✓ Libre` para abrir directamente `Nueva reserva`
+  con el alojamiento y la fecha preseleccionados.
+
+[02:55 - 03:50] 5. Módulo 3: Reservas
+- En el formulario de reserva, mostrar la validación de teléfono obligatorio,
+  email opcional, capacidad máxima, estancia mínima y el cálculo automático de
+  noches, temporada e importe estimado.
+- Intentar solapar fechas con una reserva existente para demostrar la prevención
+  de conflictos y guardar finalmente una reserva válida.
+- Mostrar en la pestaña `3. Reservas` los filtros por fecha/cliente, la ficha
+  inferior y el botón "Marcar En curso".
+
+[03:50 - 04:40] 6. Módulo 4: Empleados temporales
+- Cambiar a `4. Empleados` (`Ctrl+4`).
+- Seleccionar a Eva Soto Díaz y Luis Ortega Gil para mostrar la ficha lateral
+  con foto, idiomas, formación, días no disponibles y actividades asignadas.
+- Abrir "+ Nuevo empleado", enseñar la carga de foto y las casillas de días no
+  disponibles. Intentar dar de baja a un empleado con actividades para mostrar
+  el aviso preventivo (cancelando la acción).
+
+[04:40 - 05:25] 7. Módulo 5: Actividades de verano
+- Cambiar a `5. Actividades` (`Ctrl+5`).
+- Abrir "+ Nueva actividad" y seleccionar a `Luis Ortega Gil` un martes a las
+  10:00 para enseñar el aviso automático de indisponibilidad / solape horario.
+- Guardar una actividad válida y verificar el mensaje en la barra de estado.
+
+[05:25 - 05:50] 8. Ayuda, autoría y cierre seguro
+- Pulsar `F1` para abrir `AyudaWindow`, recorrer los apartados del índice lateral
+  y mostrar la tarjeta de autoría (Javier Herreros Pinilla y Miguel
+  Gómez-Carreño Rodríguez-Escalona).
+- Demostrar "Cerrar sesión" (vuelve a LoginWindow previa confirmación) y el
+  botón "Salir" con confirmación final.
+
+---
+ENLACE AL VÍDEO DEMOSTRACIÓN (rellenar antes de comprimir el .zip si se sube a plataforma externa)
+URL del vídeo: [PEGAR AQUÍ EL ENLACE DE ONEDRIVE / YOUTUBE OCULTO / TEAMS]

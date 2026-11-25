@@ -1,148 +1,591 @@
 <Window x:Class="Trabajo_IPO.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Gestión del complejo turístico" Height="720" Width="1180"
-        MinHeight="600" MinWidth="900" WindowStartupLocation="CenterScreen"
-        Background="#F5F7FA">
+        Title="Gestión del complejo turístico rural" Height="780" Width="1280"
+        MinHeight="650" MinWidth="1020" WindowStartupLocation="CenterScreen"
+        PreviewKeyDown="Window_PreviewKeyDown" Closing="Window_Closing"
+        Background="{DynamicResource AppBgBrush}">
     <DockPanel>
-        <Border DockPanel.Dock="Top" Background="#17324D" Padding="24,14">
+        <!-- Encabezado corporativo fijo -->
+        <Border DockPanel.Dock="Top" Background="{DynamicResource HeaderBgBrush}" Padding="20,12">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="COMPLEJO TURÍSTICO" Foreground="White" FontSize="20" FontWeight="Bold"/>
-                    <TextBlock Text="Panel de gestión" Foreground="#C8D9E8" Margin="0,3,0,0"/>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,18,0">
-                    <Border Width="48" Height="48" CornerRadius="24" Background="#F2B134" Margin="0,0,12,0">
-                        <Grid>
-                            <Image Source="{Binding FotoPerfil}" Stretch="UniformToFill" ToolTip="Foto de perfil del gestor"/>
-                            <TextBlock Text="G" FontSize="20" FontWeight="Bold"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#17324D"/>
-                        </Grid>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#234B72"
+                            BorderBrush="#F2B134" BorderThickness="2" Margin="0,0,12,0">
+                        <Image x:Name="HeaderLogoImage" Margin="2"/>
                     </Border>
-                    <StackPanel>
-                        <TextBlock Text="{Binding NombreCompleto}" Foreground="White" FontWeight="SemiBold"/>
-                        <TextBlock Text="{Binding Rol}" Foreground="#C8D9E8" FontSize="12"/>
-                        <TextBlock Text="{Binding UltimoAcceso, StringFormat=Último acceso: {0:dd/MM/yyyy HH:mm}}" Foreground="#C8D9E8" FontSize="12"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="COMPLEJO TURÍSTICO RURAL" Foreground="White" FontSize="19" FontWeight="Bold"/>
+                        <TextBlock Text="Gestión de alojamientos, disponibilidad, reservas, personal y actividades"
+                                   Foreground="#C8D9E8" FontSize="12" Margin="0,2,0,0"/>
                     </StackPanel>
                 </StackPanel>
+
+                <!-- Perfil del gestor conectado y último acceso -->
+                <Border Grid.Column="1" Background="#1F4265" BorderBrush="#315A84" BorderThickness="1"
+                        CornerRadius="6" Padding="10,6" Margin="16,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Width="42" Height="42" CornerRadius="21" Background="#F2B134" Margin="0,0,10,0">
+                            <Image Source="{Binding FotoPerfil, Converter={StaticResource ImagePathConverter}}"
+                                   Stretch="UniformToFill" ToolTip="Foto de perfil del gestor autenticado"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="{Binding NombreCompleto}" Foreground="White" FontWeight="Bold" FontSize="13"/>
+                            <TextBlock Text="{Binding Rol}" Foreground="#C8D9E8" FontSize="11.5"/>
+                            <TextBlock Text="{Binding UltimoAccesoPrevio, StringFormat=Último acceso: {0:dd/MM/yyyy HH:mm}}"
+                                       Foreground="#C8D9E8" FontSize="11.5"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Controles globales siempre accesibles: adaptación, ayuda, cerrar sesión, salir -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                    <ToggleButton x:Name="FuenteGrandeToggleButton" Content="A+" Width="46" Height="32"
-                                  Margin="0,0,8,0" Click="FuenteGrandeToggleButton_Click"
-                                  ToolTip="Alternar entre tamaño de fuente normal y grande"/>
-                    <Button Content="Ayuda" Width="70" Height="32" Click="Ayuda_Click"
-                            ToolTip="Abrir la ayuda y la información de autoría"/>
+                    <Button Content="A-" Width="38" Style="{StaticResource HeaderButtonStyle}" Margin="0,0,4,0"
+                            Click="FuenteDisminuir_Click" ToolTip="Reducir tamaño de fuente"/>
+                    <Button Content="A" Width="34" Style="{StaticResource HeaderButtonStyle}" Margin="0,0,4,0"
+                            Click="FuenteNormal_Click" ToolTip="Restablecer tamaño de fuente estándar"/>
+                    <Button Content="A+" Width="38" Style="{StaticResource HeaderButtonStyle}" Margin="0,0,8,0"
+                            Click="FuenteAumentar_Click" ToolTip="Aumentar tamaño de fuente"/>
+                    <ToggleButton x:Name="ContrasteToggleButton" Content="Contraste" Padding="10,5" MinHeight="32"
+                                  Margin="0,0,8,0" Click="ContrasteToggleButton_Click"
+                                  Background="#254E77" Foreground="White" BorderBrush="#46739E" FontWeight="SemiBold"
+                                  ToolTip="Activar o desactivar modo de alto contraste"/>
+                    <Button Content="? Ayuda" Style="{StaticResource HeaderButtonStyle}" Margin="0,0,8,0"
+                            Click="Ayuda_Click" ToolTip="Abrir ayuda general y autoría (F1)"/>
+                    <Button Content="Cerrar sesión" Style="{StaticResource HeaderButtonStyle}" Margin="0,0,8,0"
+                            Click="CerrarSesion_Click" ToolTip="Cerrar la sesión actual y volver al login"/>
+                    <Button Content="Salir" Background="#B71C1C" BorderBrush="#D32F2F" Foreground="White"
+                            Padding="12,5" MinHeight="32" FontWeight="Bold" Click="Salir_Click"
+                            ToolTip="Salir de la aplicación (solicita confirmación)"/>
                 </StackPanel>
             </Grid>
         </Border>
-        <StatusBar DockPanel.Dock="Bottom">
-            <TextBlock Text="Datos de demostración: los cambios se mantienen durante esta sesión."/>
+
+        <!-- Barra de estado inferior con feedback dinámico -->
+        <StatusBar DockPanel.Dock="Bottom" Background="#EAEFF5" BorderBrush="{DynamicResource BorderBrushSoft}"
+                   BorderThickness="0,1,0,0" Padding="14,6">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel LastChildFill="False"/>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem DockPanel.Dock="Left">
+                <TextBlock x:Name="StatusTextBlock" Foreground="{DynamicResource SuccessBrush}" FontWeight="SemiBold"
+                           Text="✓ Sesión iniciada correctamente · Datos de demostración en memoria"/>
+            </StatusBarItem>
+            <StatusBarItem DockPanel.Dock="Right">
+                <TextBlock Foreground="{DynamicResource TextMutedBrush}" FontSize="12"
+                           Text="F1: Ayuda · Ctrl+1..5: Pestañas · Ctrl+N: Nuevo · Ctrl+E: Editar · Supr: Eliminar"/>
+            </StatusBarItem>
         </StatusBar>
-        <TabControl Margin="20" FontSize="14">
-            <TabItem Header="Alojamientos">
+
+        <!-- Navegación principal mediante 5 pestañas (Miller 7±2) -->
+        <TabControl x:Name="PrincipalTabControl" Margin="14" Background="{DynamicResource CardBgBrush}"
+                    BorderBrush="{DynamicResource BorderBrushSoft}">
+
+            <!-- ==================== PESTAÑA 1: ALOJAMIENTOS ==================== -->
+            <TabItem Header="1. Alojamientos" Padding="14,7" ToolTip="Gestión de parcelas y bungalows (Ctrl+1)">
                 <Grid Margin="12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Button Content="＋ Añadir alojamiento" Width="155" Height="32" Margin="0,0,8,0"
-                                Click="AnadirAlojamiento_Click" ToolTip="Crear una nueva parcela o bungalow"/>
-                        <Button Content="✎ Modificar" Width="105" Height="32" Margin="0,0,8,0"
-                                Click="ModificarAlojamiento_Click" ToolTip="Modificar el alojamiento seleccionado"/>
-                        <Button Content="🗑 Eliminar" Width="105" Height="32" Click="EliminarAlojamiento_Click"
-                                ToolTip="Eliminar parcela o bungalow seleccionado"/>
-                    </StackPanel>
-                    <DataGrid x:Name="AlojamientosGrid" Grid.Row="1" ItemsSource="{Binding Alojamientos}"
-                              AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
-                              SelectionMode="Single" HeadersVisibility="Column">
+
+                    <!-- Barra de acciones y filtros combinables -->
+                    <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushSoft}"
+                            BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,0,0,10">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                                <Button Content="＋ Nuevo alojamiento" Style="{StaticResource PrimaryButtonStyle}"
+                                        Margin="0,0,8,0" Click="AnadirAlojamiento_Click"
+                                        ToolTip="Registrar una nueva parcela o bungalow (Ctrl+N)"/>
+                                <Button Content="✎ Editar" Style="{StaticResource SecondaryButtonStyle}"
+                                        Margin="0,0,8,0" Click="ModificarAlojamiento_Click"
+                                        ToolTip="Editar el alojamiento seleccionado (Ctrl+E)"/>
+                                <Button Content="Cambiar estado" Style="{StaticResource SecondaryButtonStyle}"
+                                        Margin="0,0,8,0" Click="CambiarEstadoAlojamiento_Click"
+                                        ToolTip="Cambiar manualmente el estado del alojamiento"/>
+                                <Button Content="🗑 Eliminar" Style="{StaticResource DangerButtonStyle}"
+                                        Click="EliminarAlojamiento_Click"
+                                        ToolTip="Dar de baja el alojamiento seleccionado (Supr)"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock Text="Tipo:" VerticalAlignment="Center" Margin="12,0,4,0" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="FiltroAlojTipoCombo" Width="105" SelectionChanged="FiltroAlojamientos_Changed"
+                                          ToolTip="Filtrar por Parcela o Bungalow">
+                                    <ComboBoxItem Content="Todos" IsSelected="True"/>
+                                    <ComboBoxItem Content="Parcela"/>
+                                    <ComboBoxItem Content="Bungalow"/>
+                                </ComboBox>
+                                <TextBlock Text="Estado:" VerticalAlignment="Center" Margin="8,0,4,0" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="FiltroAlojEstadoCombo" Width="145" SelectionChanged="FiltroAlojamientos_Changed"
+                                          ToolTip="Filtrar por estado actual">
+                                    <ComboBoxItem Content="Todos" IsSelected="True"/>
+                                    <ComboBoxItem Content="Libre"/>
+                                    <ComboBoxItem Content="Ocupada"/>
+                                    <ComboBoxItem Content="Reservada"/>
+                                    <ComboBoxItem Content="En reparación"/>
+                                    <ComboBoxItem Content="Pendiente de limpieza"/>
+                                </ComboBox>
+                                <TextBlock Text="Cap. mín:" VerticalAlignment="Center" Margin="8,0,4,0" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="FiltroAlojCapCombo" Width="70" SelectionChanged="FiltroAlojamientos_Changed"
+                                          ToolTip="Capacidad mínima requerida">
+                                    <ComboBoxItem Content="Todas" IsSelected="True"/>
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="5"/>
+                                    <ComboBoxItem Content="6"/>
+                                </ComboBox>
+                                <TextBox x:Name="FiltroAlojBuscarTextBox" Width="170" Height="30" Margin="8,0,6,0"
+                                         TextChanged="FiltroAlojamientosText_Changed"
+                                         ToolTip="Buscar por código, categoría o ubicación"/>
+                                <Button Content="Limpiar" Style="{StaticResource SecondaryButtonStyle}"
+                                        Click="LimpiarFiltrosAlojamientos_Click" ToolTip="Restablecer filtros"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- Listado -->
+                    <DataGrid x:Name="AlojamientosGrid" Grid.Row="1"
+                              SelectionChanged="AlojamientosGrid_SelectionChanged"
+                              MouseDoubleClick="AlojamientosGrid_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Código" Binding="{Binding Codigo}" Width="75"/>
+                            <DataGridTextColumn Header="Tipo" Binding="{Binding Tipo}" Width="90"/>
+                            <DataGridTextColumn Header="Categoría" Binding="{Binding Categoria}" Width="120"/>
+                            <DataGridTextColumn Header="Tamaño" Binding="{Binding TamanoTexto}" Width="80"/>
+                            <DataGridTextColumn Header="Cap." Binding="{Binding Capacidad}" Width="60"/>
+                            <DataGridTextColumn Header="Precio/noche" Binding="{Binding ResumenPrecio}" Width="115"/>
+                            <DataGridTextColumn Header="Ubicación" Binding="{Binding Ubicacion}" Width="*"/>
+                            <DataGridTemplateColumn Header="Estado" Width="195">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{Binding Estado, Converter={StaticResource EstadoBgConverter}}"
+                                                CornerRadius="12" Padding="10,3" HorizontalAlignment="Left" Margin="4,0">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Estado, Converter={StaticResource EstadoIconConverter}}"
+                                                           Foreground="{Binding Estado, Converter={StaticResource EstadoFgConverter}}"
+                                                           FontWeight="Bold" Margin="0,0,6,0"/>
+                                                <TextBlock Text="{Binding Estado}"
+                                                           Foreground="{Binding Estado, Converter={StaticResource EstadoFgConverter}}"
+                                                           FontWeight="SemiBold"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Ficha Master/Detail inferior con galería -->
+                    <GroupBox x:Name="AlojamientoDetalleGroup" Grid.Row="2" Header="Ficha del alojamiento seleccionado" Margin="0,10,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <DockPanel Margin="0,0,0,6">
+                                    <TextBlock x:Name="DetalleAlojTitulo" FontSize="15" FontWeight="Bold"
+                                               Foreground="{DynamicResource HeaderBgBrush}" Text="Seleccione un alojamiento de la tabla"/>
+                                    <TextBlock x:Name="ContadorAlojTextBlock" HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource TextMutedBrush}" FontWeight="SemiBold"/>
+                                </DockPanel>
+                                <TextBlock x:Name="DetalleAlojTarifas" Margin="0,2" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="DetalleAlojServicios" Margin="0,2" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="DetalleAlojDescripcion" Margin="0,4,0,0" Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap"/>
+                            </StackPanel>
+
+                            <Grid Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="170"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="1" CornerRadius="4" Height="106" Background="#EAEFF5">
+                                    <Image x:Name="DetalleAlojFotoPrincipal" Stretch="UniformToFill"
+                                           ToolTip="Vista principal del alojamiento o bungalow"/>
+                                </Border>
+                                <ListBox x:Name="DetalleAlojGaleriaListBox" Grid.Column="2" Height="106"
+                                         SelectionChanged="DetalleAlojGaleriaListBox_SelectionChanged"
+                                         ToolTip="Seleccione una miniatura para ampliarla">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Source="{Binding Converter={StaticResource ImagePathConverter}}"
+                                                   Width="70" Height="44" Stretch="UniformToFill" Margin="2"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <!-- ==================== PESTAÑA 2: DISPONIBILIDAD ==================== -->
+            <TabItem Header="2. Disponibilidad" Padding="14,7" ToolTip="Cuadrante por fechas de todos los alojamientos (Ctrl+2)">
+                <Grid Margin="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushSoft}"
+                            BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,0,0,10">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                                <Button Content="◀ Anterior" Style="{StaticResource SecondaryButtonStyle}"
+                                        Click="DispAnterior_Click" ToolTip="Ver quincena anterior"/>
+                                <TextBlock x:Name="DispPeriodoTextBlock" VerticalAlignment="Center" Margin="14,0"
+                                           FontSize="15" FontWeight="Bold" Foreground="{DynamicResource HeaderBgBrush}"/>
+                                <Button Content="Siguiente ▶" Style="{StaticResource SecondaryButtonStyle}"
+                                        Click="DispSiguiente_Click" ToolTip="Ver quincena siguiente"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock Text="Tipo:" VerticalAlignment="Center" Margin="12,0,4,0" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="FiltroDispTipoCombo" Width="110" SelectionChanged="FiltroDisp_Changed">
+                                    <ComboBoxItem Content="Todos" IsSelected="True"/>
+                                    <ComboBoxItem Content="Parcela"/>
+                                    <ComboBoxItem Content="Bungalow"/>
+                                </ComboBox>
+                                <TextBlock Text="Estado actual:" VerticalAlignment="Center" Margin="10,0,4,0" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="FiltroDispEstadoCombo" Width="150" SelectionChanged="FiltroDisp_Changed">
+                                    <ComboBoxItem Content="Todos" IsSelected="True"/>
+                                    <ComboBoxItem Content="Libre"/>
+                                    <ComboBoxItem Content="Ocupada"/>
+                                    <ComboBoxItem Content="Reservada"/>
+                                    <ComboBoxItem Content="En reparación"/>
+                                    <ComboBoxItem Content="Pendiente de limpieza"/>
+                                </ComboBox>
+                                <Button Content="Actualizar cuadrante" Style="{StaticResource PrimaryButtonStyle}"
+                                        Margin="10,0,0,0" Click="DispRefrescar_Click"
+                                        ToolTip="Recalcular el cuadrante con las últimas reservas"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- Cuadrante dinámico de disponibilidad -->
+                    <Border Grid.Row="1" Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushSoft}"
+                            BorderThickness="1" CornerRadius="6" Padding="10">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <Grid x:Name="DisponibilidadCuadranteGrid"/>
+                        </ScrollViewer>
+                    </Border>
+
+                    <!-- Leyenda accesible (color + icono + texto) -->
+                    <Border Grid.Row="2" Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushSoft}"
+                            BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,10,0,0">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="Leyenda:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                <Border Background="#E6F4EA" CornerRadius="10" Padding="10,4" Margin="0,0,8,0">
+                                    <TextBlock Text="✓ Libre (clic para reservar)" Foreground="#1E7E34" FontWeight="SemiBold"/>
+                                </Border>
+                                <Border Background="#FDECEA" CornerRadius="10" Padding="10,4" Margin="0,0,8,0">
+                                    <TextBlock Text="✕ Ocupada" Foreground="#C62828" FontWeight="SemiBold"/>
+                                </Border>
+                                <Border Background="#E8F1FA" CornerRadius="10" Padding="10,4" Margin="0,0,8,0">
+                                    <TextBlock Text="◷ Reservada" Foreground="#1565C0" FontWeight="SemiBold"/>
+                                </Border>
+                                <Border Background="#FFF4E5" CornerRadius="10" Padding="10,4" Margin="0,0,8,0">
+                                    <TextBlock Text="⚠ En reparación" Foreground="#B26A00" FontWeight="SemiBold"/>
+                                </Border>
+                                <Border Background="#F3E8FD" CornerRadius="10" Padding="10,4">
+                                    <TextBlock Text="✦ Pend. limpieza" Foreground="#6A1B9A" FontWeight="SemiBold"/>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Text="Consejo: pulse en una celda Libre para crear una reserva en esa fecha."
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextMutedBrush}" FontSize="12"/>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- ==================== PESTAÑA 3: RESERVAS ==================== -->
+            <TabItem Header="3. Reservas" Padding="14,7" ToolTip="Gestión de reservas y estancias (Ctrl+3)">
+                <Grid Margin="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushSoft}"
+                            BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,0,0,10">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                                <Button Content="＋ Nueva reserva" Style="{StaticResource PrimaryButtonStyle}"
+                                        Margin="0,0,8,0" Click="AnadirReserva_Click"
+                                        ToolTip="Crear una nueva reserva (Ctrl+N)"/>
+                                <Button Content="✎ Editar" Style="{StaticResource SecondaryButtonStyle}"
+                                        Margin="0,0,8,0" Click="ModificarReserva_Click"
+                                        ToolTip="Editar la reserva seleccionada (Ctrl+E)"/>
+                                <Button Content="🗑 Cancelar reserva" Style="{StaticResource DangerButtonStyle}"
+                                        Click="EliminarReserva_Click"
+                                        ToolTip="Cancelar/eliminar la reserva seleccionada (Supr)"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock Text="Desde:" VerticalAlignment="Center" Margin="8,0,4,0" FontWeight="SemiBold"/>
+                                <DatePicker x:Name="FiltroResDesdePicker" Width="115" SelectedDateChanged="FiltroRes_DateChanged"/>
+                                <TextBlock Text="Hasta:" VerticalAlignment="Center" Margin="6,0,4,0" FontWeight="SemiBold"/>
+                                <DatePicker x:Name="FiltroResHastaPicker" Width="115" SelectedDateChanged="FiltroRes_DateChanged"/>
+                                <ComboBox x:Name="FiltroResAlojCombo" Width="105" Margin="8,0,6,0"
+                                          SelectionChanged="FiltroRes_SelectionChanged" ToolTip="Filtrar por alojamiento"/>
+                                <TextBox x:Name="FiltroResBuscarTextBox" Width="165" Height="30" Margin="0,0,6,0"
+                                         TextChanged="FiltroRes_TextChanged" ToolTip="Buscar por cliente o código de reserva"/>
+                                <Button Content="Limpiar" Style="{StaticResource SecondaryButtonStyle}"
+                                        Click="LimpiarFiltrosReservas_Click" ToolTip="Limpiar filtros"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <DataGrid x:Name="ReservasGrid" Grid.Row="1"
+                              SelectionChanged="ReservasGrid_SelectionChanged"
+                              MouseDoubleClick="ReservasGrid_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Código" Binding="{Binding Codigo}" Width="80"/>
-                            <DataGridTextColumn Header="Tipo" Binding="{Binding Tipo}" Width="100"/>
-                            <DataGridTextColumn Header="Categoría" Binding="{Binding Categoria}" Width="130"/>
-                            <DataGridTextColumn Header="Ubicación" Binding="{Binding Ubicacion}" Width="*"/>
-                            <DataGridTextColumn Header="Capacidad" Binding="{Binding Capacidad}" Width="85"/>
-                            <DataGridTextColumn Header="Precio/noche" Binding="{Binding PrecioNoche, StringFormat={}{0:C}}" Width="110"/>
-                            <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="130"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Reservas">
-                <Grid Margin="12">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Button Content="＋ Añadir reserva" Width="135" Height="32" Margin="0,0,8,0"
-                                Click="AnadirReserva_Click" ToolTip="Añadir reserva para un cliente"/>
-                        <Button Content="✎ Modificar" Width="105" Height="32" Margin="0,0,8,0"
-                                Click="ModificarReserva_Click" ToolTip="Modificar la reserva seleccionada"/>
-                        <Button Content="🗑 Cancelar reserva" Width="140" Height="32" Click="EliminarReserva_Click"
-                                ToolTip="Cancelar la reserva seleccionada"/>
-                    </StackPanel>
-                    <DataGrid x:Name="ReservasGrid" Grid.Row="1" ItemsSource="{Binding Reservas}"
-                              AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Código" Binding="{Binding Codigo}" Width="85"/>
-                            <DataGridTextColumn Header="Alojamiento" Binding="{Binding Alojamiento}" Width="105"/>
                             <DataGridTextColumn Header="Cliente" Binding="{Binding Cliente}" Width="*"/>
-                            <DataGridTextColumn Header="Entrada" Binding="{Binding Entrada, StringFormat={}{0:dd/MM/yyyy}}" Width="105"/>
-                            <DataGridTextColumn Header="Salida" Binding="{Binding Salida, StringFormat={}{0:dd/MM/yyyy}}" Width="105"/>
-                            <DataGridTextColumn Header="Personas" Binding="{Binding Ocupantes}" Width="80"/>
-                            <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="110"/>
+                            <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefonos}" Width="125"/>
+                            <DataGridTextColumn Header="Alojam." Binding="{Binding Alojamiento}" Width="80"/>
+                            <DataGridTextColumn Header="Entrada" Binding="{Binding Entrada, StringFormat={}{0:dd/MM/yyyy}}" Width="100"/>
+                            <DataGridTextColumn Header="Salida" Binding="{Binding Salida, StringFormat={}{0:dd/MM/yyyy}}" Width="100"/>
+                            <DataGridTextColumn Header="Noches" Binding="{Binding Noches}" Width="70"/>
+                            <DataGridTextColumn Header="Ocup." Binding="{Binding Ocupantes}" Width="65"/>
+                            <DataGridTextColumn Header="Importe est." Binding="{Binding ImporteEstimado, StringFormat={}{0:C}}" Width="105"/>
+                            <DataGridTemplateColumn Header="Estado" Width="145">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{Binding Estado, Converter={StaticResource EstadoBgConverter}}"
+                                                CornerRadius="12" Padding="10,3" HorizontalAlignment="Left" Margin="4,0">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Estado, Converter={StaticResource EstadoIconConverter}}"
+                                                           Foreground="{Binding Estado, Converter={StaticResource EstadoFgConverter}}"
+                                                           FontWeight="Bold" Margin="0,0,6,0"/>
+                                                <TextBlock Text="{Binding Estado}"
+                                                           Foreground="{Binding Estado, Converter={StaticResource EstadoFgConverter}}"
+                                                           FontWeight="SemiBold"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+
+                    <GroupBox Grid.Row="2" Header="Detalle de la reserva seleccionada" Margin="0,10,0,0">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,0,0">
+                                <Button Content="Marcar En curso" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0"
+                                        Click="ReservaEnCurso_Click" ToolTip="Registrar entrada del cliente (Check-in)"/>
+                                <Button Content="Marcar Finalizada" Style="{StaticResource SecondaryButtonStyle}"
+                                        Click="ReservaFinalizada_Click" ToolTip="Registrar salida del cliente (Check-out)"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <DockPanel Margin="0,0,0,4">
+                                    <TextBlock x:Name="DetalleResTitulo" FontSize="15" FontWeight="Bold"
+                                               Foreground="{DynamicResource HeaderBgBrush}" Text="Seleccione una reserva de la tabla"/>
+                                    <TextBlock x:Name="ContadorResTextBlock" HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource TextMutedBrush}" FontWeight="SemiBold" Margin="16,0,0,0"/>
+                                </DockPanel>
+                                <TextBlock x:Name="DetalleResContacto" Margin="0,2" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="DetalleResSolicitudes" Margin="0,2" Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Empleados">
+
+            <!-- ==================== PESTAÑA 4: EMPLEADOS ==================== -->
+            <TabItem Header="4. Empleados" Padding="14,7" ToolTip="Gestión de guías y monitores temporales (Ctrl+4)">
                 <Grid Margin="12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Button Content="＋ Añadir empleado" Width="140" Height="32" ToolTip="Registrar un nuevo guía o monitor"/>
-                    </StackPanel>
-                    <DataGrid Grid.Row="1" ItemsSource="{Binding Empleados}" AutoGenerateColumns="False"
-                              IsReadOnly="True" CanUserAddRows="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Nombre" Binding="{Binding NombreCompleto}" Width="*"/>
-                            <DataGridTextColumn Header="Tipo" Binding="{Binding Tipo}" Width="130"/>
-                            <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" Width="110"/>
-                            <DataGridTextColumn Header="Correo" Binding="{Binding Email}" Width="190"/>
-                            <DataGridTextColumn Header="Idiomas" Binding="{Binding Idiomas}" Width="150"/>
-                            <DataGridTextColumn Header="Disponibilidad" Binding="{Binding Disponibilidad}" Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+
+                    <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushSoft}"
+                            BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,0,0,10">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                                <Button Content="＋ Nuevo empleado" Style="{StaticResource PrimaryButtonStyle}"
+                                        Margin="0,0,8,0" Click="AnadirEmpleado_Click"
+                                        ToolTip="Dar de alta un guía o monitor temporal (Ctrl+N)"/>
+                                <Button Content="✎ Editar" Style="{StaticResource SecondaryButtonStyle}"
+                                        Margin="0,0,8,0" Click="ModificarEmpleado_Click"
+                                        ToolTip="Modificar la ficha del empleado seleccionado (Ctrl+E)"/>
+                                <Button Content="🗑 Dar de baja" Style="{StaticResource DangerButtonStyle}"
+                                        Click="EliminarEmpleado_Click"
+                                        ToolTip="Dar de baja al empleado seleccionado (Supr)"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock Text="Función:" VerticalAlignment="Center" Margin="12,0,4,0" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="FiltroEmpFuncionCombo" Width="135" SelectionChanged="FiltroEmpleados_Changed">
+                                    <ComboBoxItem Content="Todas" IsSelected="True"/>
+                                    <ComboBoxItem Content="Monitor"/>
+                                    <ComboBoxItem Content="Guía"/>
+                                </ComboBox>
+                                <TextBlock Text="Idioma:" VerticalAlignment="Center" Margin="8,0,4,0" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="FiltroEmpIdiomaCombo" Width="115" SelectionChanged="FiltroEmpleados_Changed">
+                                    <ComboBoxItem Content="Todos" IsSelected="True"/>
+                                    <ComboBoxItem Content="Español"/>
+                                    <ComboBoxItem Content="Inglés"/>
+                                    <ComboBoxItem Content="Francés"/>
+                                    <ComboBoxItem Content="Alemán"/>
+                                </ComboBox>
+                                <TextBox x:Name="FiltroEmpBuscarTextBox" Width="180" Height="30" Margin="8,0,6,0"
+                                         TextChanged="FiltroEmpleadosText_Changed" ToolTip="Buscar por nombre, formación o disponibilidad"/>
+                                <Button Content="Limpiar" Style="{StaticResource SecondaryButtonStyle}"
+                                        Click="LimpiarFiltrosEmpleados_Click"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- Master/Detail horizontal -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.6*"/>
+                            <ColumnDefinition Width="14"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <DataGrid x:Name="EmpleadosGrid" Grid.Column="0"
+                                  SelectionChanged="EmpleadosGrid_SelectionChanged"
+                                  MouseDoubleClick="EmpleadosGrid_MouseDoubleClick">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Nombre y apellidos" Binding="{Binding NombreCompleto}" Width="*"/>
+                                <DataGridTextColumn Header="Función" Binding="{Binding Tipo}" Width="125"/>
+                                <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" Width="120"/>
+                                <DataGridTextColumn Header="Idiomas" Binding="{Binding Idiomas}" Width="145"/>
+                                <DataGridTextColumn Header="Disponibilidad" Binding="{Binding Disponibilidad}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <GroupBox Grid.Column="2" Header="Ficha del empleado seleccionado">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,4,0,12">
+                                        <Border Width="86" Height="86" CornerRadius="8" Background="#EAEFF5"
+                                                BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="1" Margin="0,0,12,0">
+                                            <Image x:Name="DetalleEmpFoto" Stretch="UniformToFill"/>
+                                        </Border>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock x:Name="DetalleEmpNombre" FontSize="17" FontWeight="Bold"
+                                                       Foreground="{DynamicResource HeaderBgBrush}" Text="Seleccione un empleado"/>
+                                            <TextBlock x:Name="DetalleEmpFuncion" Foreground="{DynamicResource PrimaryBrush}"
+                                                       FontWeight="SemiBold" Margin="0,3,0,0"/>
+                                            <TextBlock x:Name="ContadorEmpTextBlock" Foreground="{DynamicResource TextMutedBrush}"
+                                                       FontSize="12" Margin="0,4,0,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <TextBlock x:Name="DetalleEmpContacto" Margin="0,3" TextWrapping="Wrap"/>
+                                    <TextBlock x:Name="DetalleEmpIdiomas" Margin="0,3" TextWrapping="Wrap"/>
+                                    <TextBlock x:Name="DetalleEmpFormacion" Margin="0,3" TextWrapping="Wrap"/>
+                                    <TextBlock x:Name="DetalleEmpDisponibilidad" Margin="0,3,0,10" TextWrapping="Wrap"/>
+
+                                    <Separator Margin="0,4,0,8"/>
+                                    <TextBlock Text="Actividades asignadas:" FontWeight="Bold" Foreground="{DynamicResource HeaderBgBrush}" Margin="0,0,0,4"/>
+                                    <TextBlock x:Name="DetalleEmpActividades" TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </GroupBox>
+                    </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Actividades">
+
+            <!-- ==================== PESTAÑA 5: ACTIVIDADES ==================== -->
+            <TabItem Header="5. Actividades" Padding="14,7" ToolTip="Gestión de actividades de verano (Ctrl+5)">
                 <Grid Margin="12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                        <Button Content="＋ Añadir actividad" Width="145" Height="32" ToolTip="Programar una nueva actividad de verano"/>
-                    </StackPanel>
-                    <DataGrid Grid.Row="1" ItemsSource="{Binding Actividades}" AutoGenerateColumns="False"
-                              IsReadOnly="True" CanUserAddRows="False">
+
+                    <Border Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrushSoft}"
+                            BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,0,0,10">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                                <Button Content="＋ Nueva actividad" Style="{StaticResource PrimaryButtonStyle}"
+                                        Margin="0,0,8,0" Click="AnadirActividad_Click"
+                                        ToolTip="Programar una nueva actividad de verano (Ctrl+N)"/>
+                                <Button Content="✎ Editar" Style="{StaticResource SecondaryButtonStyle}"
+                                        Margin="0,0,8,0" Click="ModificarActividad_Click"
+                                        ToolTip="Editar la actividad seleccionada (Ctrl+E)"/>
+                                <Button Content="🗑 Eliminar" Style="{StaticResource DangerButtonStyle}"
+                                        Click="EliminarActividad_Click"
+                                        ToolTip="Dar de baja la actividad seleccionada (Supr)"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock Text="Área:" VerticalAlignment="Center" Margin="10,0,4,0" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="FiltroActZonaCombo" Width="135" SelectionChanged="FiltroActividades_Changed"/>
+                                <TextBlock Text="Destinatarios:" VerticalAlignment="Center" Margin="8,0,4,0" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="FiltroActDestCombo" Width="95" SelectionChanged="FiltroActividades_Changed">
+                                    <ComboBoxItem Content="Todos" IsSelected="True"/>
+                                    <ComboBoxItem Content="Niños"/>
+                                    <ComboBoxItem Content="Adultos"/>
+                                </ComboBox>
+                                <TextBlock Text="Día:" VerticalAlignment="Center" Margin="8,0,4,0" FontWeight="SemiBold"/>
+                                <ComboBox x:Name="FiltroActDiaCombo" Width="80" SelectionChanged="FiltroActividades_Changed">
+                                    <ComboBoxItem Content="Todos" IsSelected="True"/>
+                                    <ComboBoxItem Content="Lun"/>
+                                    <ComboBoxItem Content="Mar"/>
+                                    <ComboBoxItem Content="Mié"/>
+                                    <ComboBoxItem Content="Jue"/>
+                                    <ComboBoxItem Content="Vie"/>
+                                    <ComboBoxItem Content="Sáb"/>
+                                    <ComboBoxItem Content="Dom"/>
+                                </ComboBox>
+                                <TextBox x:Name="FiltroActBuscarTextBox" Width="160" Height="30" Margin="8,0,6,0"
+                                         TextChanged="FiltroActividadesText_Changed" ToolTip="Buscar por actividad o monitor"/>
+                                <Button Content="Limpiar" Style="{StaticResource SecondaryButtonStyle}"
+                                        Click="LimpiarFiltrosActividades_Click"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <DataGrid x:Name="ActividadesGrid" Grid.Row="1"
+                              SelectionChanged="ActividadesGrid_SelectionChanged"
+                              MouseDoubleClick="ActividadesGrid_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Actividad" Binding="{Binding Nombre}" Width="*"/>
-                            <DataGridTextColumn Header="Monitor" Binding="{Binding Monitor}" Width="180"/>
-                            <DataGridTextColumn Header="Horario" Binding="{Binding Horario}" Width="180"/>
-                            <DataGridTextColumn Header="Destinatarios" Binding="{Binding Destinatarios}" Width="120"/>
-                            <DataGridTextColumn Header="Cupo máximo" Binding="{Binding CupoMaximo}" Width="100"/>
-                            <DataGridTextColumn Header="Precio/hora" Binding="{Binding PrecioHora, StringFormat={}{0:C}}" Width="100"/>
-                            <DataGridTextColumn Header="Zona" Binding="{Binding Zona}" Width="180"/>
+                            <DataGridTextColumn Header="Monitor/es" Binding="{Binding Monitor}" Width="190"/>
+                            <DataGridTextColumn Header="Horario" Binding="{Binding Horario}" Width="190"/>
+                            <DataGridTextColumn Header="Cupo" Binding="{Binding CupoResumen}" Width="95"/>
+                            <DataGridTextColumn Header="Destinatarios" Binding="{Binding Destinatarios}" Width="105"/>
+                            <DataGridTextColumn Header="Precio" Binding="{Binding PrecioResumen}" Width="130"/>
+                            <DataGridTextColumn Header="Área" Binding="{Binding Zona}" Width="170"/>
                         </DataGrid.Columns>
                     </DataGrid>
+
+                    <GroupBox Grid.Row="2" Header="Ficha de la actividad seleccionada" Margin="0,10,0,0">
+                        <StackPanel>
+                            <DockPanel Margin="0,0,0,4">
+                                <TextBlock x:Name="DetalleActTitulo" FontSize="15" FontWeight="Bold"
+                                           Foreground="{DynamicResource HeaderBgBrush}" Text="Seleccione una actividad de la tabla"/>
+                                <TextBlock x:Name="ContadorActTextBlock" HorizontalAlignment="Right"
+                                           Foreground="{DynamicResource TextMutedBrush}" FontWeight="SemiBold"/>
+                            </DockPanel>
+                            <TextBlock x:Name="DetalleActDescripcion" Margin="0,2" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="DetalleActMateriales" Margin="0,2" Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </GroupBox>
                 </Grid>
             </TabItem>
         </TabControl>
